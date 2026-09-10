@@ -131,13 +131,13 @@ export function ExportModal({ isOpen, onClose }: Props) {
 
   // Actions
   const handleCreateInWhatsApp = async () => {
-    if (!webpResult) return;
+    if (!pngResult) return;
     try {
-      await downloadAndOpenWhatsApp(webpResult.blob, pngResult?.blob, targetPlatform);
+      await downloadAndOpenWhatsApp(pngResult.blob, webpResult?.blob, targetPlatform);
       setHasOpenedWhatsApp(true);
       success(t("export.createInWhatsAppSuccess"));
     } catch {
-      triggerFileDownload(webpResult.blob, "sticker.webp");
+      triggerFileDownload(pngResult.blob, "sticker.png");
       info(t("export.sharedFallback"));
     }
   };
@@ -376,6 +376,11 @@ export function ExportModal({ isOpen, onClose }: Props) {
                 </strong>
                 <span className="text-stone-600 dark:text-stone-300">{t("export.step3Desc")}</span>
               </div>
+            </div>
+
+            {/* Warning against Cmd+V / drag to avoid sending as photo */}
+            <div className="p-2.5 rounded-xl bg-amber-500/10 dark:bg-amber-950/30 border border-amber-500/30 text-[10.5px] text-amber-900 dark:text-amber-200 font-medium leading-relaxed">
+              {t("export.dontPasteWarning")}
             </div>
 
             <p className="text-[10px] text-stone-500 dark:text-stone-400 italic">

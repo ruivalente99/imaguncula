@@ -48,22 +48,22 @@ export function openWhatsApp(target: WhatsAppTarget = "auto"): void {
 /**
  * Triggers official sticker download and immediately launches WhatsApp so the user
  * can click '+' -> 'Novo Autocolante' (New Sticker) and pick the downloaded sticker.
+ * Uses PNG format because WhatsApp Web / Desktop sticker creator natively accepts
+ * and expects transparent PNG images.
  */
 export async function downloadAndOpenWhatsApp(
-  webpBlob: Blob,
-  pngBlob?: Blob,
+  pngBlob: Blob,
+  webpBlob?: Blob,
   target: WhatsAppTarget = "auto"
 ): Promise<void> {
-  // 1. Download official WebP file so it is readily available in Downloads
-  triggerFileDownload(webpBlob, "sticker.webp");
+  // 1. Download official transparent PNG file so it is readily available in Downloads
+  triggerFileDownload(pngBlob, "sticker.png");
 
-  // 2. Optionally copy PNG to clipboard
-  if (pngBlob) {
-    try {
-      await copyImageToClipboard(pngBlob);
-    } catch {
-      // Graceful fallback
-    }
+  // 2. Also copy PNG to clipboard
+  try {
+    await copyImageToClipboard(pngBlob);
+  } catch {
+    // Graceful fallback
   }
 
   // 3. Open WhatsApp Web or App
