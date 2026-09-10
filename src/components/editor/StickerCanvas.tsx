@@ -20,6 +20,7 @@ export function StickerCanvas() {
   const { t } = useTranslation();
   const {
     processedCanvas,
+    canvasVersion,
     hasImage,
     border,
     transform,
@@ -30,9 +31,11 @@ export function StickerCanvas() {
     showCheckerboard,
     setShowCheckerboard,
     activeTab,
+    bgTool,
     canUndo,
     undoBgAction,
     applyWandClick,
+    startBrushStroke,
     applyBrushStroke,
     brushSize,
     brushMode,
@@ -70,7 +73,7 @@ export function StickerCanvas() {
       textOverlays,
       safetyPadding: 16,
     });
-  }, [processedCanvas, border, transform, cutoutShape, colorFilter, textOverlays]);
+  }, [processedCanvas, canvasVersion, border, transform, cutoutShape, colorFilter, textOverlays]);
 
   useEffect(() => {
     renderComposite();
@@ -132,9 +135,13 @@ export function StickerCanvas() {
     if (activeTab === "background") {
       const imgCoords = getImageCoords(coords.x, coords.y);
       if (imgCoords) {
-        // Wand tool click or start brush stroke
-        applyWandClick(imgCoords.x, imgCoords.y);
-        applyBrushStroke(imgCoords.x, imgCoords.y);
+        if (bgTool === "wand") {
+          applyWandClick(imgCoords.x, imgCoords.y);
+        } else if (bgTool === "brush") {
+          startBrushStroke();
+          applyBrushStroke(imgCoords.x, imgCoords.y);
+          renderComposite();
+        }
       }
     } else {
       // Pan image in Editor mode
@@ -145,16 +152,21 @@ export function StickerCanvas() {
   const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const coords = getCanvasCoords(e.clientX, e.clientY);
     if (coords) {
-      setBrushCursor({ x: coords.x, y: coords.y, visible: activeTab === "background" });
+      setBrushCursor({
+        x: coords.x,
+        y: coords.y,
+        visible: activeTab === "background" && bgTool === "brush",
+      });
     }
 
     if (!isPointerDown || !hasImage) return;
 
     if (activeTab === "background") {
-      if (coords) {
+      if (bgTool === "brush" && coords) {
         const imgCoords = getImageCoords(coords.x, coords.y);
         if (imgCoords) {
           applyBrushStroke(imgCoords.x, imgCoords.y);
+          renderComposite();
         }
       }
     } else {
@@ -230,7 +242,7 @@ export function StickerCanvas() {
             setTransform({ zoom: parseFloat(Math.max(0.2, transform.zoom - 0.1).toFixed(2)) })
           }
           className="p-1.5 rounded-full hover:bg-stone-100 dark:hover:bg-[#21262d] active:scale-95 transition-all"
-          title="Zoom -"
+          title={t("canvas.zoomOut")}
         >
           <ZoomOut className="w-3.5 h-3.5" />
         </button>
@@ -244,7 +256,7 @@ export function StickerCanvas() {
             setTransform({ zoom: parseFloat(Math.min(3.0, transform.zoom + 0.1).toFixed(2)) })
           }
           className="p-1.5 rounded-full hover:bg-stone-100 dark:hover:bg-[#21262d] active:scale-95 transition-all"
-          title="Zoom +"
+          title={t("canvas.zoomIn")}
         >
           <ZoomIn className="w-3.5 h-3.5" />
         </button>
@@ -278,7 +290,9 @@ export function StickerCanvas() {
       <div
         className={`relative w-full max-w-[340px] xs:max-w-[390px] sm:max-w-[440px] md:max-w-[480px] lg:max-w-[512px] aspect-square rounded-3xl overflow-hidden shadow-2xl border-2 transition-all duration-200 ${
           activeTab === "background"
-            ? "border-amber-500/80 ring-4 ring-amber-500/15 cursor-crosshair"
+            ? bgTool === "shapes"
+              ? "border-amber-500/80 ring-4 ring-amber-500/15 cursor-default"
+              : "border-amber-500/80 ring-4 ring-amber-500/15 cursor-crosshair"
             : "border-stone-200/90 dark:border-[#30363d] cursor-grab active:cursor-grabbing"
         }`}
         onWheel={handleWheel}
@@ -300,10 +314,10 @@ export function StickerCanvas() {
         {showSafeZone && (
           <div
             className="absolute inset-[3.125%] border border-dashed border-amber-500/40 pointer-events-none z-10 rounded-2xl flex items-start justify-end p-1.5"
-            title="Margem de segurança de 16px recomendada pelo WhatsApp"
+            title={t("canvas.safeZoneTitle")}
           >
             <span className="text-[9px] font-mono font-bold tracking-wider px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-700 dark:text-amber-300 opacity-60">
-              16px safe zone
+              {t("canvas.safeZoneBadge")}
             </span>
           </div>
         )}

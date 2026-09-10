@@ -9,7 +9,7 @@ test.describe("02. Border and Die-Cut Controls", () => {
   });
 
   test("toggles with-border and without-border modes", async ({ page }) => {
-    await expect(page.getByText("Borda de Adesivo")).toBeVisible();
+    await expect(page.getByText("Borda de Sticker")).toBeVisible();
 
     const withBorderBtn = page.getByRole("button", { name: "Com Borda" });
     const withoutBorderBtn = page.getByRole("button", { name: "Sem Borda" });

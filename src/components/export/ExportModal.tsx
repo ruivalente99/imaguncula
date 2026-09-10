@@ -13,6 +13,8 @@ import {
   triggerFileDownload,
   ExportResult,
 } from "@/lib/webp-encoder";
+import { copyAndLaunchWhatsApp } from "@/lib/whatsapp-direct";
+import { downloadWastickersPack } from "@/lib/wastickers-export";
 import { WhatsAppGuide } from "./WhatsAppGuide";
 import {
   X,
@@ -24,6 +26,8 @@ import {
   CheckCircle2,
   Sparkles,
   AlertTriangle,
+  MessageCircle,
+  PackageOpen,
 } from "lucide-react";
 
 interface Props {
@@ -36,6 +40,7 @@ export function ExportModal({ isOpen, onClose }: Props) {
   const { success, error, info } = useToast();
   const {
     processedCanvas,
+    canvasVersion,
     border,
     transform,
     cutoutShape,
@@ -95,7 +100,7 @@ export function ExportModal({ isOpen, onClose }: Props) {
     return () => {
       isMounted = false;
     };
-  }, [isOpen, processedCanvas, border, transform, cutoutShape, colorFilter, textOverlays]);
+  }, [isOpen, processedCanvas, canvasVersion, border, transform, cutoutShape, colorFilter, textOverlays]);
 
   // Handle ESC key
   useEffect(() => {
@@ -111,16 +116,35 @@ export function ExportModal({ isOpen, onClose }: Props) {
   if (!isOpen) return null;
 
   // Actions
+  const handleOpenWhatsApp = async () => {
+    if (!pngResult) return;
+    try {
+      await copyAndLaunchWhatsApp(pngResult.blob, "auto");
+      setHasCopied(true);
+      success(t("export.openWhatsAppSuccess"));
+      setTimeout(() => setHasCopied(false), 2500);
+    } catch {
+      error(t("export.copiedError"));
+    }
+  };
+
+  const handleDownloadWastickers = async () => {
+    if (!webpResult) return;
+    const items = [{ dataUrl: webpResult.dataUrl }];
+    await downloadWastickersPack(items, "sticker.wastickers", "Papyrus Sticker", "imaguncula");
+    success(t("export.downloadWastickersSuccess"));
+  };
+
   const handleShareWhatsApp = async () => {
     if (!webpResult) return;
     const file = new File([webpResult.blob], "sticker.webp", { type: "image/webp" });
     const shared = await shareFileNative(file, "Papyrus Sticker", "Sticker do WhatsApp");
     if (shared) {
-      success("Compartilhado com sucesso!");
+      success(t("export.sharedSuccess"));
     } else {
       // Fallback: trigger download
       triggerFileDownload(webpResult.blob, "sticker.webp");
-      info("Download do sticker iniciado para envio!");
+      info(t("export.sharedFallback"));
     }
   };
 
@@ -132,20 +156,20 @@ export function ExportModal({ isOpen, onClose }: Props) {
       success(t("export.copiedSuccess"));
       setTimeout(() => setHasCopied(false), 2500);
     } else {
-      error("Não foi possível copiar diretamente. Use o botão de Download.");
+      error(t("export.copiedError"));
     }
   };
 
   const handleDownloadWebP = () => {
     if (!webpResult) return;
     triggerFileDownload(webpResult.blob, "sticker.webp");
-    success("Sticker WebP baixado!");
+    success(t("export.downloadWebpSuccess"));
   };
 
   const handleDownloadPNG = () => {
     if (!pngResult) return;
     triggerFileDownload(pngResult.blob, "sticker.png");
-    success("Imagem PNG HD baixada!");
+    success(t("export.downloadPngSuccess"));
   };
 
   const handleSaveToPack = () => {
@@ -184,7 +208,7 @@ export function ExportModal({ isOpen, onClose }: Props) {
           <button
             onClick={onClose}
             className="p-1.5 rounded-full hover:bg-stone-100 dark:hover:bg-[#21262d] text-stone-400 hover:text-stone-700 transition-colors"
-            title="Fechar (Esc)"
+            title={t("common.close")}
           >
             <X className="w-5 h-5" />
           </button>
@@ -220,7 +244,7 @@ export function ExportModal({ isOpen, onClose }: Props) {
               </span>
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
                 <CheckCircle2 className="w-3 h-3" />
-                WhatsApp Ready
+                {t("export.readyBadge")}
               </span>
             </div>
 
@@ -230,47 +254,97 @@ export function ExportModal({ isOpen, onClose }: Props) {
                 {sizeKb} KB
               </strong>{" "}
               <span className="text-[10px] text-emerald-600 dark:text-emerald-400">
-                (limite oficial &lt; 100 KB)
+                {t("export.officialLimit")}
               </span>
             </p>
 
             <div className="text-[11px] text-stone-400 pt-1">
-              Transparência preservada • Contorno die-cut integrado
+              {t("export.specsNotice")}
             </div>
           </div>
         </div>
 
         {/* Primary Export Actions */}
         <div className="space-y-2.5">
-          {/* Action 1: Enviar / Compartilhar no WhatsApp */}
+          {/* Action 1: Copy & Open in WhatsApp */}
           <button
             type="button"
-            onClick={handleShareWhatsApp}
-            disabled={isGenerating || !webpResult}
+            onClick={handleOpenWhatsApp}
+            disabled={isGenerating || !pngResult}
             className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-sm shadow-emerald-600/25 active:scale-[0.99] transition-all cursor-pointer group"
           >
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-xl bg-white/20 group-hover:scale-110 transition-transform">
-                <Share2 className="w-4 h-4" />
+                <MessageCircle className="w-4 h-4" />
               </div>
               <div className="text-left">
-                <span className="block font-bold">{t("export.shareWhatsApp")}</span>
+                <span className="block font-bold">{t("export.openWhatsApp")}</span>
                 <span className="text-[10px] text-white/80 font-normal">
-                  {t("export.shareWhatsAppDesc")}
+                  {t("export.openWhatsAppDesc")}
                 </span>
               </div>
             </div>
             <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-white/20">
-              Enviar 🚀
+              {t("export.openWhatsAppBadge")}
             </span>
           </button>
 
-          {/* Action 2: Copiar Imagem (para WhatsApp Web) */}
+          {/* Action 2: Send / Share on WhatsApp */}
+          <button
+            type="button"
+            onClick={handleShareWhatsApp}
+            disabled={isGenerating || !webpResult}
+            className="w-full flex items-center justify-between p-3 rounded-2xl border border-stone-200 dark:border-[#363d47] bg-stone-50/80 dark:bg-[#1c2128] hover:border-emerald-400 dark:hover:border-emerald-500 active:scale-[0.99] transition-all cursor-pointer group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+                <Share2 className="w-4 h-4" />
+              </div>
+              <div className="text-left">
+                <span className="block font-bold text-xs sm:text-sm text-stone-900 dark:text-stone-100">
+                  {t("export.shareWhatsApp")}
+                </span>
+                <span className="text-[10px] text-stone-500">
+                  {t("export.shareWhatsAppDesc")}
+                </span>
+              </div>
+            </div>
+            <span className="text-[11px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
+              {t("export.sendBadge")}
+            </span>
+          </button>
+
+          {/* Action 3: Download .wastickers Pack for Sticker Maker / Sticker.ly */}
+          <button
+            type="button"
+            onClick={handleDownloadWastickers}
+            disabled={isGenerating || !webpResult}
+            className="w-full flex items-center justify-between p-3 rounded-2xl border border-stone-200 dark:border-[#363d47] bg-stone-50/80 dark:bg-[#1c2128] hover:border-amber-400 dark:hover:border-amber-500 active:scale-[0.99] transition-all cursor-pointer group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform">
+                <PackageOpen className="w-4 h-4" />
+              </div>
+              <div className="text-left">
+                <span className="block font-bold text-xs sm:text-sm text-stone-900 dark:text-stone-100">
+                  {t("export.downloadWastickers")}
+                </span>
+                <span className="text-[10px] text-stone-500">
+                  {t("export.downloadWastickersDesc")}
+                </span>
+              </div>
+            </div>
+            <span className="text-[11px] font-mono font-bold text-amber-600 dark:text-amber-400">
+              .wastickers
+            </span>
+          </button>
+
+          {/* Action 4: Copy Image (for WhatsApp Web) */}
           <button
             type="button"
             onClick={handleCopyImage}
             disabled={isGenerating || !pngResult}
-            className="w-full flex items-center justify-between p-3.5 rounded-2xl border border-stone-200 dark:border-[#363d47] bg-stone-50/80 dark:bg-[#1c2128] hover:border-amber-400 dark:hover:border-amber-500 active:scale-[0.99] transition-all cursor-pointer group"
+            className="w-full flex items-center justify-between p-3 rounded-2xl border border-stone-200 dark:border-[#363d47] bg-stone-50/80 dark:bg-[#1c2128] hover:border-amber-400 dark:hover:border-amber-500 active:scale-[0.99] transition-all cursor-pointer group"
           >
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform">
@@ -286,11 +360,11 @@ export function ExportModal({ isOpen, onClose }: Props) {
               </div>
             </div>
             <span className="text-[11px] font-mono text-stone-500">
-              {hasCopied ? "Copiado! ✓" : "Ctrl+V"}
+              {hasCopied ? t("export.copiedBadge") : "Ctrl+V"}
             </span>
           </button>
 
-          {/* Action 3: Baixar Sticker WebP */}
+          {/* Action 3: Download Sticker WebP */}
           <div className="grid grid-cols-2 gap-2.5 pt-1">
             <button
               type="button"
@@ -299,7 +373,7 @@ export function ExportModal({ isOpen, onClose }: Props) {
               className="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-stone-200 dark:border-[#363d47] bg-white dark:bg-[#161b22] hover:bg-stone-50 dark:hover:bg-[#1c2128] text-xs font-semibold text-stone-800 dark:text-stone-200 active:scale-95 transition-all cursor-pointer"
             >
               <Download className="w-4 h-4 text-amber-600" />
-              <span>WebP (512x512)</span>
+              <span>{t("export.formatWebp")}</span>
             </button>
 
             <button
@@ -309,11 +383,11 @@ export function ExportModal({ isOpen, onClose }: Props) {
               className="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-stone-200 dark:border-[#363d47] bg-white dark:bg-[#161b22] hover:bg-stone-50 dark:hover:bg-[#1c2128] text-xs font-semibold text-stone-800 dark:text-stone-200 active:scale-95 transition-all cursor-pointer"
             >
               <Download className="w-4 h-4 text-stone-400" />
-              <span>PNG HD</span>
+              <span>{t("export.formatPng")}</span>
             </button>
           </div>
 
-          {/* Action 4: Salvar no Pacote Local */}
+          {/* Action 4: Save to Local Pack */}
           <button
             type="button"
             onClick={handleSaveToPack}
@@ -325,7 +399,7 @@ export function ExportModal({ isOpen, onClose }: Props) {
             ) : (
               <BookmarkCheck className="w-3.5 h-3.5" />
             )}
-            <span>{hasSavedPack ? "Salvo no Pacote!" : t("export.saveToTray")}</span>
+            <span>{hasSavedPack ? t("export.savedBadge") : t("export.saveToTray")}</span>
           </button>
         </div>
 

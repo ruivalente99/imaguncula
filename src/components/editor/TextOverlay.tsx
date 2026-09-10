@@ -36,7 +36,7 @@ export function TextOverlay() {
               {t("textOverlay.title")}
             </h3>
             <p className="text-[11px] text-stone-500 dark:text-stone-400">
-              Legendas e memes com contorno de alta legibilidade
+              {t("textOverlay.subtitle")}
             </p>
           </div>
         </div>
@@ -126,7 +126,7 @@ export function TextOverlay() {
                 </div>
 
                 <div>
-                  <span className="text-stone-500 block mb-1">Posição Vertical (Y)</span>
+                  <span className="text-stone-500 block mb-1">{t("textOverlay.posY")}</span>
                   <input
                     type="range"
                     min={40}
@@ -141,7 +141,7 @@ export function TextOverlay() {
               {/* Color options */}
               <div className="flex items-center justify-between pt-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] text-stone-500">Cor do Texto:</span>
+                  <span className="text-[10px] text-stone-500">{t("textOverlay.textColorLabel")}</span>
                   <input
                     type="color"
                     value={item.fillColor}
@@ -151,7 +151,7 @@ export function TextOverlay() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] text-stone-500">Contorno:</span>
+                  <span className="text-[10px] text-stone-500">{t("textOverlay.strokeColorLabel")}</span>
                   <input
                     type="color"
                     value={item.strokeColor}

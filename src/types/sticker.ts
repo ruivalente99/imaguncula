@@ -21,6 +21,8 @@ export interface StickerTransform {
 
 export type CutoutShape = "free" | "circle" | "squircle" | "rounded-rect" | "heart" | "star";
 
+export type BgTool = "wand" | "brush" | "shapes";
+
 export interface TextOverlayItem {
   id: string;
   text: string;

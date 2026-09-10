@@ -10,7 +10,7 @@ test.describe("04. Text Overlays and Meme Stamps", () => {
   test("adds custom meme text overlay", async ({ page }) => {
     await expect(page.getByText("Legendas & Emojis")).toBeVisible();
 
-    const input = page.locator('input[placeholder="DIGITE SEU MEME..."]');
+    const input = page.locator('input[placeholder="ESCREVA O SEU MEME..."]');
     await input.fill("BOM DIA GRUPO!");
 
     await page.getByRole("button", { name: "Adicionar Texto" }).click();

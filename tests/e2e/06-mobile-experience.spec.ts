@@ -26,7 +26,7 @@ test.describe("06. Mobile Native Dock Experience", () => {
 
     // Switch tab via mobile dock
     await mobileNav.getByText("Borda").click();
-    await expect(page.getByText("Borda de Adesivo")).toBeVisible();
+    await expect(page.getByText("Borda de Sticker")).toBeVisible();
 
     // Switch to Fundo
     await mobileNav.getByText("Fundo").click();

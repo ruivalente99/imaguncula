@@ -18,7 +18,9 @@ test.describe("05. Export Modal and WhatsApp Integration", () => {
     await expect(page.getByText("WhatsApp Ready")).toBeVisible();
 
     // Verify export buttons
-    await expect(page.getByText("Compartilhar no WhatsApp")).toBeVisible();
+    await expect(page.getByRole("button", { name: /Copiar & Abrir no WhatsApp/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /Descarregar \.wastickers/i })).toBeVisible();
+    await expect(page.getByText("Partilhar no WhatsApp")).toBeVisible();
     await expect(page.getByText("Copiar Imagem")).toBeVisible();
     await expect(page.getByRole("button", { name: "WebP (512x512)" })).toBeVisible();
     await expect(page.getByRole("button", { name: "PNG HD" })).toBeVisible();
@@ -26,6 +28,7 @@ test.describe("05. Export Modal and WhatsApp Integration", () => {
     // Verify WhatsApp guide accordion can be expanded
     await page.getByText("Como usar no WhatsApp?").click();
     await expect(page.getByText("No WhatsApp Web (Computador):")).toBeVisible();
+    await expect(page.getByText("Aplicações de Stickers (Sticker Maker / Sticker.ly):")).toBeVisible();
   });
 
   test("saves sticker to local pack and displays in Pacote tray", async ({ page }) => {
@@ -35,12 +38,12 @@ test.describe("05. Export Modal and WhatsApp Integration", () => {
     await exportBtn.click();
 
     // Save to local pack
-    const saveBtn = page.getByRole("button", { name: /Salvar no Meu Pacote/i });
+    const saveBtn = page.getByRole("button", { name: /Guardar no Meu Pacote/i });
     await expect(saveBtn).toBeVisible();
     await saveBtn.click();
 
     // Verify confirmation message
-    await expect(page.getByText("Sticker salvo no seu pacote local!")).toBeVisible();
+    await expect(page.getByText("Sticker guardado no seu pacote local!")).toBeVisible();
 
     // Close modal by clicking X or pressing Escape
     await page.keyboard.press("Escape");
@@ -50,7 +53,8 @@ test.describe("05. Export Modal and WhatsApp Integration", () => {
     await navigateToTab(page, "Pacote");
 
     // Verify pack has at least 1 saved sticker
-    await expect(page.getByText("Meus Stickers Salvos")).toBeVisible();
-    await expect(page.getByRole("button", { name: "Baixar Pacote Completo (.ZIP)" })).toBeVisible();
+    await expect(page.getByText("Os Meus Stickers Guardados")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Descarregar Pacote Completo (.ZIP)" })).toBeVisible();
+    await expect(page.getByRole("button", { name: /Descarregar \.wastickers/i })).toBeVisible();
   });
 });

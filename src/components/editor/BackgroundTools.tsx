@@ -40,13 +40,13 @@ export function BackgroundTools() {
     setWandContiguous,
     cutoutShape,
     setCutoutShape,
+    bgTool,
+    setBgTool,
   } = useSticker();
-
-  const [subTab, setSubTab] = useState<"wand" | "brush" | "shapes">("wand");
 
   const handleAuto = () => {
     applyAutoCutout();
-    success("Remoção automática aplicada!");
+    success(t("bg.autoSuccess"));
   };
 
   const shapes: { id: CutoutShape; label: string; icon: any }[] = [
@@ -119,7 +119,7 @@ export function BackgroundTools() {
           </div>
         </div>
         <span className="text-[11px] font-mono font-bold text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full bg-amber-500/20">
-          Auto ⚡
+          {t("bg.autoBadge")}
         </span>
       </button>
 
@@ -127,9 +127,9 @@ export function BackgroundTools() {
       <div className="grid grid-cols-3 p-1 rounded-2xl bg-stone-100 dark:bg-[#0d1117] border border-stone-200/80 dark:border-[#30363d]">
         <button
           type="button"
-          onClick={() => setSubTab("wand")}
+          onClick={() => setBgTool("wand")}
           className={`flex items-center justify-center gap-1.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-            subTab === "wand"
+            bgTool === "wand"
               ? "bg-white dark:bg-[#21262d] text-amber-600 dark:text-amber-400 shadow-xs"
               : "text-stone-500 hover:text-stone-800 dark:hover:text-stone-200"
           }`}
@@ -140,9 +140,9 @@ export function BackgroundTools() {
 
         <button
           type="button"
-          onClick={() => setSubTab("brush")}
+          onClick={() => setBgTool("brush")}
           className={`flex items-center justify-center gap-1.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-            subTab === "brush"
+            bgTool === "brush"
               ? "bg-white dark:bg-[#21262d] text-amber-600 dark:text-amber-400 shadow-xs"
               : "text-stone-500 hover:text-stone-800 dark:hover:text-stone-200"
           }`}
@@ -153,9 +153,9 @@ export function BackgroundTools() {
 
         <button
           type="button"
-          onClick={() => setSubTab("shapes")}
+          onClick={() => setBgTool("shapes")}
           className={`flex items-center justify-center gap-1.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-            subTab === "shapes"
+            bgTool === "shapes"
               ? "bg-white dark:bg-[#21262d] text-amber-600 dark:text-amber-400 shadow-xs"
               : "text-stone-500 hover:text-stone-800 dark:hover:text-stone-200"
           }`}
@@ -166,7 +166,7 @@ export function BackgroundTools() {
       </div>
 
       {/* Subtab 1: Magic Wand Settings */}
-      {subTab === "wand" && (
+      {bgTool === "wand" && (
         <div className="space-y-3 pt-1 animate-in fade-in-50 duration-150">
           <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-300/50 dark:border-amber-700/30 text-[11px] text-amber-900 dark:text-amber-200 flex items-center gap-2">
             <Wand2 className="w-4 h-4 text-amber-600 shrink-0" />
@@ -226,7 +226,7 @@ export function BackgroundTools() {
       )}
 
       {/* Subtab 2: Brush & Eraser */}
-      {subTab === "brush" && (
+      {bgTool === "brush" && (
         <div className="space-y-3 pt-1 animate-in fade-in-50 duration-150">
           <div className="grid grid-cols-2 gap-2">
             <button
@@ -271,7 +271,7 @@ export function BackgroundTools() {
       )}
 
       {/* Subtab 3: Quick Shapes Cutout */}
-      {subTab === "shapes" && (
+      {bgTool === "shapes" && (
         <div className="grid grid-cols-5 gap-1.5 pt-1 animate-in fade-in-50 duration-150">
           {shapes.map((s) => {
             const Icon = s.icon;

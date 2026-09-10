@@ -1,5 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const testPort = process.env.TEST_PORT || "3005";
+
 export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: true,
@@ -8,7 +10,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: "list",
   use: {
-    baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL || "http://127.0.0.1:3000",
+    baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL || `http://127.0.0.1:${testPort}`,
     trace: "on-first-retry",
   },
   projects: [
@@ -24,9 +26,16 @@ export default defineConfig({
   webServer: process.env.PLAYWRIGHT_TEST_BASE_URL
     ? undefined
     : {
-        command: "npm run start -- -p 3000",
-        url: "http://127.0.0.1:3000",
-        reuseExistingServer: true,
+        command: `npm run start -- -p ${testPort}`,
+        url: `http://127.0.0.1:${testPort}`,
+        reuseExistingServer: !process.env.CI,
         timeout: 30000,
+        env: {
+          NO_PROXY: "127.0.0.1,localhost,::1",
+          HTTP_PROXY: "",
+          HTTPS_PROXY: "",
+          http_proxy: "",
+          https_proxy: "",
+        },
       },
 });

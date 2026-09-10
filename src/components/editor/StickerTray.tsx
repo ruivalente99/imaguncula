@@ -5,23 +5,31 @@ import { useSticker } from "@/context/StickerContext";
 import { useTranslation } from "@/locales";
 import { useToast } from "@/context/ToastContext";
 import { exportStickersZip } from "@/lib/zip-export";
-import { Layers, Download, Trash2, PackagePlus, FileArchive } from "lucide-react";
+import { downloadWastickersPack } from "@/lib/wastickers-export";
+import { Layers, Download, Trash2, PackagePlus, FileArchive, PackageOpen } from "lucide-react";
 
 export function StickerTray() {
   const { t } = useTranslation();
   const { savedStickers, removeFromPack, clearPack } = useSticker();
   const { success } = useToast();
 
+  const handleDownloadWastickers = async () => {
+    if (savedStickers.length === 0) return;
+    const items = savedStickers.map((s) => ({ dataUrl: s.thumbnailDataUrl }));
+    await downloadWastickersPack(items, "papyrus_pack.wastickers", "Papyrus Stickers", "imaguncula");
+    success(t("tray.downloadWastickersSuccess"));
+  };
+
   const handleDownloadZip = async () => {
     if (savedStickers.length === 0) return;
     await exportStickersZip(savedStickers);
-    success("Pacote ZIP baixado com sucesso!");
+    success(t("tray.downloadZipSuccess"));
   };
 
   const handleClear = () => {
     if (window.confirm(t("tray.confirmClear"))) {
       clearPack();
-      success("Pacote limpo!");
+      success(t("tray.clearedSuccess"));
     }
   };
 
@@ -68,15 +76,26 @@ export function StickerTray() {
         </div>
       ) : (
         <div className="space-y-4">
-          {/* Download Zip Action Banner */}
-          <button
-            type="button"
-            onClick={handleDownloadZip}
-            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-sm shadow-amber-600/25 active:scale-95 transition-all cursor-pointer"
-          >
-            <FileArchive className="w-4 h-4" />
-            <span>{t("tray.downloadZip")}</span>
-          </button>
+          {/* Download Action Banners */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={handleDownloadWastickers}
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm shadow-emerald-600/25 active:scale-95 transition-all cursor-pointer"
+            >
+              <PackageOpen className="w-4 h-4" />
+              <span>{t("tray.downloadWastickers")}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleDownloadZip}
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-[#21262d] dark:hover:bg-[#282e37] text-stone-700 dark:text-stone-200 border border-stone-200 dark:border-[#363d47] font-semibold text-xs active:scale-95 transition-all cursor-pointer"
+            >
+              <FileArchive className="w-4 h-4 text-stone-500" />
+              <span>{t("tray.downloadZip")}</span>
+            </button>
+          </div>
 
           {/* Grid of saved stickers */}
           <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5 max-h-[380px] overflow-y-auto pr-1">
@@ -109,7 +128,7 @@ export function StickerTray() {
                     type="button"
                     onClick={() => removeFromPack(item.id)}
                     className="p-1 rounded-full text-stone-400 hover:text-rose-600 opacity-60 group-hover:opacity-100 transition-opacity"
-                    title="Remover"
+                    title={t("common.remove")}
                   >
                     <Trash2 className="w-3 h-3" />
                   </button>

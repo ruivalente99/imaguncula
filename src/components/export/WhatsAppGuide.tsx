@@ -34,10 +34,10 @@ export function WhatsAppGuide() {
             </div>
             <div>
               <strong className="block text-stone-800 dark:text-stone-100 font-semibold mb-0.5">
-                No WhatsApp Web (Computador):
+                {t("export.guideWebTitle")}
               </strong>
               <span>
-                Basta clicar no botão <b>&quot;Copiar Imagem&quot;</b> abaixo e colar com <b>Ctrl+V</b> (ou Cmd+V) direto na conversa do WhatsApp Web. O WhatsApp reconhece como figurinha automaticamente!
+                {t("export.guideWebDesc")}
               </span>
             </div>
           </div>
@@ -48,10 +48,10 @@ export function WhatsAppGuide() {
             </div>
             <div>
               <strong className="block text-stone-800 dark:text-stone-100 font-semibold mb-0.5">
-                No Celular (iPhone ou Android):
+                {t("export.guideMobileTitle")}
               </strong>
               <span>
-                Toque em <b>&quot;Compartilhar no WhatsApp&quot;</b> e selecione o contato desejado na folha de compartilhamento nativa.
+                {t("export.guideMobileDesc")}
               </span>
             </div>
           </div>
@@ -62,10 +62,10 @@ export function WhatsAppGuide() {
             </div>
             <div>
               <strong className="block text-stone-800 dark:text-stone-100 font-semibold mb-0.5">
-                Criar Pacote Permanente:
+                {t("export.guideAppsTitle")}
               </strong>
               <span>
-                Você pode baixar o arquivo <b>.webp</b> oficial de 512x512 ou o pacote <b>.ZIP</b> e importá-los em apps como <i>Sticker.ly</i> ou <i>Personal Stickers</i> para adicionar permanentemente ao teclado do WhatsApp.
+                {t("export.guideAppsDesc")}
               </span>
             </div>
           </div>

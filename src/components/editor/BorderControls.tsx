@@ -20,7 +20,7 @@ export function BorderControls() {
     { name: t("border.colorWhite"), hex: "#ffffff" },
     { name: t("border.colorAmber"), hex: "#b45309" },
     { name: t("border.colorNeon"), hex: "#22c55e" },
-    { name: "Yellow", hex: "#facc15" },
+    { name: t("border.colorYellow"), hex: "#facc15" },
     { name: t("border.colorBlack"), hex: "#000000" },
   ];
 
@@ -54,7 +54,7 @@ export function BorderControls() {
         </span>
       </div>
 
-      {/* Main Switch: Com Borda / Sem Borda */}
+      {/* Main Switch: With Border / Without Border */}
       <div className="grid grid-cols-2 p-1 rounded-2xl bg-stone-100 dark:bg-[#0d1117] border border-stone-200/80 dark:border-[#30363d]">
         <button
           type="button"
@@ -155,7 +155,7 @@ export function BorderControls() {
                   value={border.color}
                   onChange={(e) => setBorder({ color: e.target.value })}
                   className="w-8 h-8 rounded-full cursor-pointer border-2 border-stone-300 dark:border-stone-600 p-0 overflow-hidden bg-transparent"
-                  title="Cor personalizada"
+                  title={t("border.customColor")}
                 />
               </div>
             </div>
@@ -177,7 +177,7 @@ export function BorderControls() {
             <button
               type="button"
               data-testid="shadow-toggle"
-              aria-label="Toggle Sombra 3D"
+              aria-label={t("border.shadowAria")}
               onClick={() => setBorder({ shadowEnabled: !border.shadowEnabled })}
               className={`w-11 h-6 rounded-full transition-colors relative p-0.5 cursor-pointer ${
                 border.shadowEnabled ? "bg-amber-600" : "bg-stone-200 dark:bg-[#30363d]"

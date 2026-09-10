@@ -6,6 +6,19 @@
     "ready": "whatsapp ready (512x512 webp)",
     "specs": "512x512 px • < 100 kb"
   },
+  "common": {
+    "close": "Close (Esc)",
+    "remove": "Remove",
+    "undo": "Undo",
+    "changeLanguage": "Change language",
+    "switchToEnglish": "Switch to English",
+    "switchToPortuguese": "Mudar para Português"
+  },
+  "theme": {
+    "toggle": "Toggle light / dark theme",
+    "switchToLight": "Switch to Light Mode",
+    "switchToDark": "Switch to Dark Mode"
+  },
   "nav": {
     "editor": "Editor",
     "background": "Background",
@@ -25,7 +38,11 @@
     "sample2": "Meme Face",
     "sample3": "Classic Cat",
     "changePhoto": "Change Photo",
-    "removePhoto": "Remove Photo"
+    "removePhoto": "Remove Photo",
+    "sampleTest": "1-click test",
+    "errorPaste": "Error reading pasted image",
+    "errorLoad": "Error loading image file",
+    "errorDrop": "Error dropping image"
   },
   "bg": {
     "title": "Background Removal",
@@ -35,6 +52,8 @@
     "shapesTab": "Quick Shapes",
     "autoCutout": "Automatic Removal",
     "autoCutoutDesc": "Automatically detects and isolates borders and background corners",
+    "autoSuccess": "Automatic cutout applied!",
+    "autoBadge": "Auto ⚡",
     "clickPrompt": "Tip: Click any color in preview to remove it!",
     "tolerance": "Color Tolerance",
     "feather": "Edge Feathering",
@@ -64,17 +83,24 @@
     "colorWhite": "Classic White",
     "colorAmber": "Papyrus Amber",
     "colorNeon": "Neon Green",
+    "colorYellow": "Yellow",
     "colorBlack": "Black",
+    "customColor": "Custom color",
     "shadowTitle": "3D Pop Shadow",
     "enableShadow": "Floating Drop Shadow",
-    "shadowBlur": "Shadow Intensity"
+    "shadowBlur": "Shadow Intensity",
+    "shadowAria": "Toggle 3D Shadow"
   },
   "transform": {
     "title": "Adjustments & Position",
+    "subtitle": "Zoom, orientation and photo adjustments",
     "zoom": "Zoom / Scale",
     "rotation": "Rotation",
+    "rotate90": "Rotate 90°",
     "flipH": "Flip Horizontal",
     "flipV": "Flip Vertical",
+    "flipHShort": "Flip H",
+    "flipVShort": "Flip V",
     "center": "Center",
     "reset": "Reset Transform",
     "filters": "Image Filters",
@@ -84,12 +110,16 @@
   },
   "textOverlay": {
     "title": "Captions & Emojis",
+    "subtitle": "Captions and memes with high-readability outline",
     "addText": "Add Text",
     "placeholder": "TYPE YOUR MEME...",
     "font": "Font",
     "size": "Size",
+    "posY": "Vertical Position (Y)",
     "textColor": "Text Color",
+    "textColorLabel": "Text Color:",
     "strokeColor": "Text Outline",
+    "strokeColorLabel": "Outline:",
     "delete": "Remove Caption",
     "quickEmojis": "Quick Sticker Emojis"
   },
@@ -105,15 +135,26 @@
     "checkerboard": "Transparent Grid",
     "whatsappSafeZone": "Safety Padding (16px)",
     "actualSize": "Actual Size 512x512",
-    "dragHint": "Drag to move • Pinch/Scroll to zoom"
+    "dragHint": "Drag to move • Pinch/Scroll to zoom",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "safeZoneTitle": "16px safety padding recommended by WhatsApp",
+    "safeZoneBadge": "16px safe zone"
   },
   "export": {
     "title": "Export Sticker",
     "subtitle": "Official WhatsApp format & multiple platforms",
+    "openWhatsApp": "Copy & Open WhatsApp",
+    "openWhatsAppDesc": "Copies image and opens WhatsApp to paste with Ctrl+V",
+    "openWhatsAppSuccess": "Sticker copied! Opening WhatsApp...",
+    "openWhatsAppBadge": "Open 💬",
     "shareWhatsApp": "Share to WhatsApp",
     "shareWhatsAppDesc": "Send directly to WhatsApp on mobile as a sticker",
     "copyImage": "Copy Image",
     "copyImageDesc": "Copy and paste (Ctrl+V) into WhatsApp Web or Telegram",
+    "downloadWastickers": "Download .wastickers (Sticker Maker / Sticker.ly)",
+    "downloadWastickersDesc": "Universal pack to import directly on mobile",
+    "downloadWastickersSuccess": ".wastickers pack downloaded!",
     "downloadWebp": "Download WebP Sticker (512x512)",
     "downloadWebpDesc": "Native sticker format with transparency & < 100 KB size",
     "downloadPng": "Download Transparent PNG",
@@ -124,9 +165,28 @@
     "guideWeb": "On WhatsApp Web: Click 'Copy Image' and press Ctrl+V in any chat.",
     "guideMobile": "On Mobile: Click 'Share to WhatsApp' and pick your contact.",
     "guideApps": "On Android/iOS: You can also import the downloaded .webp via Sticker.ly or Personal Stickers.",
+    "guideWebTitle": "On WhatsApp Web (Desktop):",
+    "guideWebDesc": "Just click 'Copy & Open WhatsApp' and paste with Ctrl+V (or Cmd+V) into any chat. WhatsApp automatically converts it into a sticker!",
+    "guideMobileTitle": "On Mobile (Direct WhatsApp):",
+    "guideMobileDesc": "Tap 'Share to WhatsApp' to send the sticker directly to any chat via the native share sheet.",
+    "guideAppsTitle": "Sticker Apps (Sticker Maker / Sticker.ly):",
+    "guideAppsDesc": "Download the .wastickers file or .ZIP pack. Opening the .wastickers file on mobile automatically launches Sticker Maker, allowing you to add the entire pack to WhatsApp with 1 tap!",
     "copiedSuccess": "Image copied to clipboard!",
     "savedSuccess": "Sticker saved to your local pack!",
-    "sizeInfo": "Estimated file size:"
+    "sizeInfo": "Estimated file size:",
+    "sharedSuccess": "Shared successfully!",
+    "sharedFallback": "Sticker download started for sending!",
+    "copiedError": "Could not copy directly. Use the Download button.",
+    "downloadWebpSuccess": "WebP sticker downloaded!",
+    "downloadPngSuccess": "HD PNG image downloaded!",
+    "readyBadge": "WhatsApp Ready",
+    "officialLimit": "(official limit < 100 KB)",
+    "specsNotice": "Transparency preserved • Integrated die-cut outline",
+    "sendBadge": "Send 🚀",
+    "copiedBadge": "Copied! ✓",
+    "formatWebp": "WebP (512x512)",
+    "formatPng": "PNG HD",
+    "savedBadge": "Saved to Pack!"
   },
   "tray": {
     "title": "My Saved Stickers",
@@ -134,9 +194,13 @@
     "empty": "No stickers saved in this pack yet.",
     "emptyPrompt": "Create a sticker and click 'Save to My Pack'.",
     "downloadZip": "Download Full Pack (.ZIP)",
+    "downloadWastickers": "Download .wastickers (Sticker Maker / Apps)",
+    "downloadWastickersSuccess": ".wastickers pack saved successfully!",
     "clearAll": "Clear Pack",
     "itemCount": "stickers in pack",
-    "confirmClear": "Are you sure you want to clear your saved stickers?"
+    "confirmClear": "Are you sure you want to clear your saved stickers?",
+    "downloadZipSuccess": "ZIP pack downloaded successfully!",
+    "clearedSuccess": "Pack cleared!"
   },
   "pwa": {
     "install": "Install Application",

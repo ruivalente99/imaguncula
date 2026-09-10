@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "eslint src",
     "test:engine": "tsx scripts/test-engine.ts",
-    "test:e2e": "playwright test",
-    "test": "npm run test:engine && playwright test"
+    "test:e2e": "NO_PROXY=127.0.0.1,localhost,::1 HTTP_PROXY= HTTPS_PROXY= http_proxy= https_proxy= playwright test",
+    "test": "npm run test:engine && npm run test:e2e"
   },
   "dependencies": {
     "clsx": "^2.1.1",

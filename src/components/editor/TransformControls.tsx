@@ -44,7 +44,7 @@ export function TransformControls() {
               {t("transform.title")}
             </h3>
             <p className="text-[11px] text-stone-500 dark:text-stone-400">
-              Zoom, orientação e ajustes de foto
+              {t("transform.subtitle")}
             </p>
           </div>
         </div>
@@ -65,7 +65,7 @@ export function TransformControls() {
           type="button"
           onClick={handleRotate90}
           className="flex flex-col items-center gap-1 p-2 rounded-xl border border-stone-200 dark:border-[#30363d] hover:bg-stone-50 dark:hover:bg-[#1c2128] active:scale-95 text-xs text-stone-700 dark:text-stone-300 transition-all"
-          title="Girar 90°"
+          title={t("transform.rotate90")}
         >
           <RotateCw className="w-4 h-4 text-amber-600" />
           <span className="text-[10px]">+90°</span>
@@ -82,7 +82,7 @@ export function TransformControls() {
           title={t("transform.flipH")}
         >
           <FlipHorizontal className="w-4 h-4" />
-          <span className="text-[10px]">Flip H</span>
+          <span className="text-[10px]">{t("transform.flipHShort")}</span>
         </button>
 
         <button
@@ -96,7 +96,7 @@ export function TransformControls() {
           title={t("transform.flipV")}
         >
           <FlipVertical className="w-4 h-4" />
-          <span className="text-[10px]">Flip V</span>
+          <span className="text-[10px]">{t("transform.flipVShort")}</span>
         </button>
 
         <button

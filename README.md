@@ -1,6 +1,6 @@
 # 🍌 imaguncula
 
-> **imaguncula** — PWA editorial e privado para criação e exportação de stickers para WhatsApp e outras plataformas, seguindo o design system e a filosofia **TypeUI Charm** do [papyrus](https://github.com/ruivalente99/papyrus).
+> **imaguncula** — Editorial and private PWA for creating and exporting WhatsApp stickers and multi-platform assets, built with the **TypeUI Charm** design system and philosophy from [papyrus](https://github.com/ruivalente99/papyrus).
 
 ![WhatsApp Sticker Specs](https://img.shields.io/badge/WhatsApp-512x512%20WebP%20%3C100KB-25D366?logo=whatsapp&logoColor=white)
 ![PWA](https://img.shields.io/badge/PWA-Offline--First-f59e0b)
@@ -10,83 +10,85 @@
 
 ---
 
-## 🏛️ Filosofia & Design (Papyrus Guidelines)
+## 🏛️ Philosophy & Design (Papyrus Guidelines)
 
-- **Identidade Editorial**: Marca em minúsculas `imaguncula`, emblema vetorial dinâmico `NanoBananaLogo` em tons de âmbar quente (`#b45309` / `#f59e0b`), bordas nítidas e microtipografia mono (`JetBrains Mono`).
-- **Ergonomia Nativa iOS/Android**:
-  - Dock de navegação inferior fixo com Safe Area (`pb-safe`) e alvos de toque $\ge 44\text{px}$.
-  - Bloqueio de ghost drag nativo (`user-drag: none`) e eliminação de overscroll horizontal.
-  - Alternância suave de temas Claro/Escuro e suporte bilíngue PT/EN sem textos hardcoded.
-- **100% Offline-First & Privado**:
-  - Processamento inteiramente no cliente via HTML5 Canvas 2D.
-  - Nenhuma imagem é enviada para servidores ou nuvem de terceiros.
-  - Service Worker e Web App Manifest configurados para instalação standalone no celular ou desktop.
-
----
-
-## ✨ Funcionalidades
-
-1. **Upload & Fotos**:
-   - Upload de arquivos de imagem (JPEG, PNG, WebP, HEIC).
-   - Captura direta pela câmera no celular.
-   - Área de soltar (Drag & Drop) e colar direto da área de transferência com `Ctrl+V`.
-   - 3 presets vetoriais para teste instantâneo com 1 clique (Pet, Meme, Gato).
-2. **Remoção de Fundo Simples & Offline**:
-   - **Varinha Mágica**: clique em qualquer cor do preview para removê-la com distância de cor perceptual ponderada.
-   - **Recorte Automático 1-Click**: detecta e elimina automaticamente o perímetro e cantos de fundo.
-   - **Pincel & Borracha**: ferramentas manuais de retoque e restauração com cursor em tempo real e suporte a desfazer (*undo*).
-   - **Formas Rápidas**: recorte geométrico instantâneo em Círculo, Superelipse (*Squircle*), Retângulo Arredondado, Coração e Estrela.
-3. **Borda Die-Cut de Figurinha**:
-   - Alternador rápido **Com Borda / Sem Borda**.
-   - Dilatação radial no Canvas por máscara alfa: contorno uniforme e sem serrilhado.
-   - Presets de espessura (Fina, Média, Grossa, Extra) e controle por slider.
-   - Paleta de cores rápidas (Branco Clássico, Âmbar, Neon, Preto) e seletor livre.
-   - Efeito de **Sombra Flutuante 3D** para destacar o sticker em qualquer fundo de conversa.
-4. **Legendas de Meme & Emojis**:
-   - Textos de alta visibilidade com contorno espesso.
-   - Carimbos rápidos de figurinhas (🔥, 😂, ❤️, ✨, 🕶️, 🚀, 💯, etc.).
-5. **Exportação WhatsApp & Outros Meios**:
-   - **Padrão Oficial WhatsApp**: Exatamente $512 \times 512\text{ px}$, formato WebP com transparência e compressão adaptativa garantida $< 100\text{ KB}$. Margem de segurança de $16\text{px}$ visível no canvas.
-   - **Compartilhar no Celular**: Envio direto para o WhatsApp via Web Share API como figurinha.
-   - **Copiar Imagem**: Botão para copiar e colar com `Ctrl+V` diretamente no WhatsApp Web ou Telegram.
-   - **Downloads**: Download direto em WebP (512x512) ou PNG HD transparente.
-   - **Bandeja de Pacotes & ZIP**: Salva suas criações no navegador e exporta pacotes completos em arquivo `.zip`.
+- **Editorial Identity**: Lowercase brand `imaguncula`, dynamic vector emblem `NanoBananaLogo` in warm amber tones (`#b45309` / `#f59e0b`), crisp borders, and mono microtypography (`JetBrains Mono`).
+- **Native iOS/Android Ergonomics**:
+  - Fixed docked bottom navigation bar with Safe Area (`pb-safe`) and touch targets $\ge 44\text{px}$.
+  - Native ghost drag prevention (`user-drag: none`) and elimination of horizontal overscroll bounce.
+  - Smooth Light/Dark theme switching and comprehensive bilingual PT/EN support without hardcoded UI strings.
+- **100% Offline-First & Private**:
+  - Processing executed entirely client-side via HTML5 Canvas 2D.
+  - No user images are ever transmitted to external servers or third-party clouds.
+  - Service Worker and Web App Manifest configured for standalone install on mobile and desktop devices.
 
 ---
 
-## 🧪 Testes Automatizados
+## ✨ Features
 
-O projeto inclui uma suíte completa de testes de motor e testes End-to-End via Playwright (Desktop e Mobile):
+1. **Upload & Photos**:
+   - Image file upload (JPEG, PNG, WebP, HEIC).
+   - Direct camera capture on mobile devices.
+   - Drag & Drop zone and direct clipboard paste with `Ctrl+V`.
+   - 3 built-in vector presets for instant 1-click testing (Cute Pet, Meme Face, Classic Cat).
+2. **Simple & Offline Background Removal**:
+   - **Magic Wand**: Click any color in the preview canvas to remove it with weighted perceptual color distance.
+   - **1-Click Auto Cutout**: Automatically detects and isolates perimeter background and corner colors.
+   - **Brush & Eraser**: Manual retouching and restoration tools with real-time cursor overlay and undo history.
+   - **Quick Shapes**: Instant geometric cutouts in Circle, Squircle (Apple-like superellipse), Rounded Rectangle, Heart, and Star.
+3. **Die-Cut Sticker Border**:
+   - Fast toggle for **With Border / Without Border**.
+   - Radial dilation on Canvas via alpha mask: uniform, anti-aliased contour.
+   - Thickness presets (Thin, Medium, Bold, Extra) and continuous slider control.
+   - Quick color palette (Classic White, Papyrus Amber, Neon Green, Yellow, Black) plus free color picker.
+   - **3D Pop Shadow** effect to make stickers stand out on any chat wallpaper background.
+4. **Meme Captions & Emojis**:
+   - High-visibility typography with contrasting outline strokes.
+   - Quick emoji stamp picker (🔥, 😂, ❤️, ✨, 🕶️, 🚀, 💯, etc.).
+5. **WhatsApp & Multi-Platform Export**:
+   - **Official WhatsApp Standard**: Exactly $512 \times 512\text{ px}$, WebP format with alpha transparency and guaranteed adaptive compression $< 100\text{ KB}$. Visible $16\text{px}$ safety margin padding guide.
+   - **1-Click "Copiar & Abrir no WhatsApp"**: Copies the sticker directly to the system clipboard and launches WhatsApp Web (`web.whatsapp.com`) on desktop or the native WhatsApp application (`whatsapp://`) on mobile for immediate pasting.
+   - **Mobile Sticker Apps Integration (`.wastickers`)**: Generates universal `.wastickers` container archives (`title.txt`, `author.txt`, 96x96 `tray.png`, and 512x512 `.webp` stickers) recognized by *Sticker Maker* and *Sticker.ly* workflows to add complete packs to WhatsApp on iOS & Android with a single tap.
+   - **Mobile Share**: Direct sending to WhatsApp via native Web Share API.
+   - **Copy Image**: 1-click copy to clipboard for instant `Ctrl+V` pasting into WhatsApp Web or Telegram.
+   - **Direct Downloads**: Download in standard WebP (512x512) or transparent HD PNG.
+   - **Sticker Pack Tray & ZIP**: Store creations locally in the browser and export full packs as `.wastickers` or `.zip` files.
+
+---
+
+## 🧪 Automated Testing
+
+The project includes an automated engine test suite and Playwright End-to-End tests (Desktop and Mobile viewports):
 
 ```bash
-# Rodar todos os testes (Engine + Playwright E2E)
+# Run all tests (Engine + Playwright E2E)
 npm run test
 
-# Rodar apenas testes Playwright
+# Run only Playwright E2E tests
 npm run test:e2e
 
-# Rodar apenas testes unitários de motor
+# Run only unit/engine tests
 npm run test:engine
 ```
 
 ---
 
-## 🚀 Como Executar
+## 🚀 Getting Started
 
 ```bash
-# Instalar dependências
+# Install dependencies
 npm install
 
-# Iniciar servidor de desenvolvimento
+# Start development server
 npm run dev
 
-# Gerar build de produção
+# Create production build
 npm run build
 
-# Iniciar servidor de produção
+# Start production server
 npm run start
 ```
 
 ---
 
-*Desenvolvido com o ecossistema Papyrus — 2026.*
+*Crafted with the Papyrus ecosystem — 2026.*

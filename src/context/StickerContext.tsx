@@ -5,6 +5,7 @@ import {
   StickerBorderConfig,
   StickerTransform,
   CutoutShape,
+  BgTool,
   TextOverlayItem,
   SavedStickerItem,
 } from "@/types/sticker";
@@ -19,6 +20,7 @@ interface StickerContextType {
   // State
   originalImage: HTMLImageElement | null;
   processedCanvas: HTMLCanvasElement | null;
+  canvasVersion: number;
   hasImage: boolean;
   border: StickerBorderConfig;
   transform: StickerTransform;
@@ -28,6 +30,7 @@ interface StickerContextType {
   savedStickers: SavedStickerItem[];
   showCheckerboard: boolean;
   activeTab: "editor" | "background" | "border" | "text" | "tray";
+  bgTool: BgTool;
   canUndo: boolean;
   brushSize: number;
   brushMode: "erase" | "restore";
@@ -37,6 +40,7 @@ interface StickerContextType {
 
   // Setters & Actions
   setActiveTab: (tab: "editor" | "background" | "border" | "text" | "tray") => void;
+  setBgTool: (tool: BgTool) => void;
   setShowCheckerboard: (show: boolean) => void;
   setBorder: (border: Partial<StickerBorderConfig>) => void;
   setTransform: (transform: Partial<StickerTransform>) => void;
@@ -52,6 +56,7 @@ interface StickerContextType {
   // Background Removal Actions
   applyAutoCutout: () => void;
   applyWandClick: (canvasX: number, canvasY: number) => void;
+  startBrushStroke: () => void;
   applyBrushStroke: (canvasX: number, canvasY: number) => void;
   resetBgMask: () => void;
   undoBgAction: () => void;
@@ -104,6 +109,12 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
   const [savedStickers, setSavedStickers] = useState<SavedStickerItem[]>([]);
   const [showCheckerboard, setShowCheckerboard] = useState(true);
   const [activeTab, setActiveTab] = useState<"editor" | "background" | "border" | "text" | "tray">("editor");
+  const [bgTool, setBgTool] = useState<BgTool>("wand");
+  const [canvasVersion, setCanvasVersion] = useState(0);
+
+  const bumpCanvasVersion = useCallback(() => {
+    setCanvasVersion((v) => v + 1);
+  }, []);
 
   // BG Removal Tools State
   const [brushSize, setBrushSize] = useState(28);
@@ -160,7 +171,8 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
 
     setOriginalImage(img);
     setProcessedCanvas(canvas);
-  }, []);
+    bumpCanvasVersion();
+  }, [bumpCanvasVersion]);
 
   const loadImageFromFile = async (file: File): Promise<void> => {
     return new Promise((resolve, reject) => {
@@ -201,6 +213,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
     originalImageDataRef.current = null;
     setTextOverlays([]);
     setTransformState(defaultTransform);
+    bumpCanvasVersion();
   };
 
   const setBorder = (updates: Partial<StickerBorderConfig>) => {
@@ -230,7 +243,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
     const imgData = ctx.getImageData(0, 0, w, h);
     const result = autoRemovePerimeter(imgData, wandTolerance, wandFeather);
     ctx.putImageData(result, 0, 0);
-    setProcessedCanvas(processedCanvas);
+    bumpCanvasVersion();
   };
 
   const applyWandClick = (imgX: number, imgY: number) => {
@@ -259,8 +272,14 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
     }
 
     ctx.putImageData(result, 0, 0);
-    setProcessedCanvas(processedCanvas);
+    bumpCanvasVersion();
   };
+
+  const startBrushStroke = useCallback(() => {
+    if (!processedCanvas) return;
+    const ctx = processedCanvas.getContext("2d", { willReadFrequently: true })!;
+    pushUndoState(ctx, processedCanvas.width, processedCanvas.height);
+  }, [processedCanvas, pushUndoState]);
 
   const applyBrushStroke = (imgX: number, imgY: number) => {
     if (!processedCanvas || !originalImageDataRef.current) return;
@@ -278,7 +297,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
       brushMode
     );
     ctx.putImageData(result, 0, 0);
-    setProcessedCanvas(processedCanvas);
+    bumpCanvasVersion();
   };
 
   const resetBgMask = () => {
@@ -293,7 +312,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
     );
     ctx.putImageData(clone, 0, 0);
     setUndoCount(undoStackRef.current.length);
-    setProcessedCanvas(processedCanvas);
+    bumpCanvasVersion();
   };
 
   const undoBgAction = () => {
@@ -302,7 +321,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
     const ctx = processedCanvas.getContext("2d", { willReadFrequently: true })!;
     ctx.putImageData(last, 0, 0);
     setUndoCount(undoStackRef.current.length);
-    setProcessedCanvas(processedCanvas);
+    bumpCanvasVersion();
   };
 
   // Text overlay methods
@@ -359,6 +378,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
       value={{
         originalImage,
         processedCanvas,
+        canvasVersion,
         hasImage: !!processedCanvas,
         border,
         transform,
@@ -368,6 +388,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
         savedStickers,
         showCheckerboard,
         activeTab,
+        bgTool,
         canUndo: undoCount > 0,
         brushSize,
         brushMode,
@@ -375,6 +396,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
         wandFeather,
         wandContiguous,
         setActiveTab,
+        setBgTool,
         setShowCheckerboard,
         setBorder,
         setTransform,
@@ -386,6 +408,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
         clearImage,
         applyAutoCutout,
         applyWandClick,
+        startBrushStroke,
         applyBrushStroke,
         resetBgMask,
         undoBgAction,

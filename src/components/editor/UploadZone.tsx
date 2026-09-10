@@ -25,7 +25,7 @@ export function UploadZone() {
         if (items[i].type.startsWith("image/")) {
           const file = items[i].getAsFile();
           if (file) {
-            loadImageFromFile(file).catch(() => error("Erro ao ler imagem colada"));
+            loadImageFromFile(file).catch(() => error(t("upload.errorPaste")));
             break;
           }
         }
@@ -34,12 +34,12 @@ export function UploadZone() {
 
     window.addEventListener("paste", handlePaste);
     return () => window.removeEventListener("paste", handlePaste);
-  }, [loadImageFromFile, error]);
+  }, [loadImageFromFile, error, t]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      loadImageFromFile(file).catch(() => error("Erro ao carregar arquivo de imagem"));
+      loadImageFromFile(file).catch(() => error(t("upload.errorLoad")));
     }
   };
 
@@ -57,7 +57,7 @@ export function UploadZone() {
     setIsDragging(false);
     const file = e.dataTransfer.files?.[0];
     if (file && file.type.startsWith("image/")) {
-      loadImageFromFile(file).catch(() => error("Erro ao soltar imagem"));
+      loadImageFromFile(file).catch(() => error(t("upload.errorDrop")));
     }
   };
 
@@ -152,7 +152,7 @@ export function UploadZone() {
                 <span className="text-xs font-semibold text-stone-800 dark:text-stone-200 truncate">
                   {sample.title}
                 </span>
-                <span className="text-[10px] text-stone-400 font-mono">1-click test</span>
+                <span className="text-[10px] text-stone-400 font-mono">{t("upload.sampleTest")}</span>
               </div>
             </button>
           ))}
