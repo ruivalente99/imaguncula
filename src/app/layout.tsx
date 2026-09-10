@@ -18,14 +18,14 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "papyrus stickers — criador de stickers para whatsapp",
+  title: "imagucula — criador de stickers para whatsapp",
   description: "Crie stickers para WhatsApp com recorte de fundo, borda personalizada e formato oficial 512x512 WebP. 100% offline e privado.",
-  applicationName: "papyrus stickers",
+  applicationName: "imagucula",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "papyrus stickers",
+    title: "imagucula",
   },
   formatDetection: {
     telephone: false,

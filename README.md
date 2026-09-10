@@ -1,6 +1,6 @@
-# 🍌 imaguncula
+# 🍌 imagucula
 
-> **imaguncula** — Editorial and private PWA for creating and exporting WhatsApp stickers and multi-platform assets, built with the **TypeUI Charm** design system and philosophy from [papyrus](https://github.com/ruivalente99/papyrus).
+> **imagucula** — Editorial and private PWA for creating and exporting WhatsApp stickers and multi-platform assets, built with the **TypeUI Charm** design system and philosophy from [papyrus](https://github.com/ruivalente99/papyrus).
 
 ![WhatsApp Sticker Specs](https://img.shields.io/badge/WhatsApp-512x512%20WebP%20%3C100KB-25D366?logo=whatsapp&logoColor=white)
 ![PWA](https://img.shields.io/badge/PWA-Offline--First-f59e0b)
@@ -12,7 +12,7 @@
 
 ## 🏛️ Philosophy & Design (Papyrus Guidelines)
 
-- **Editorial Identity**: Lowercase brand `imaguncula`, dynamic vector emblem `NanoBananaLogo` in warm amber tones (`#b45309` / `#f59e0b`), crisp borders, and mono microtypography (`JetBrains Mono`).
+- **Editorial Identity**: Lowercase brand `imagucula`, dynamic vector emblem `NanoBananaLogo` in warm amber tones (`#b45309` / `#f59e0b`), crisp borders, and mono microtypography (`JetBrains Mono`).
 - **Native iOS/Android Ergonomics**:
   - Fixed docked bottom navigation bar with Safe Area (`pb-safe`) and touch targets $\ge 44\text{px}$.
   - Native ghost drag prevention (`user-drag: none`) and elimination of horizontal overscroll bounce.

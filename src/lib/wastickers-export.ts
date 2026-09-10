@@ -64,14 +64,14 @@ export async function generateTrayIconBase64(
  */
 export async function buildWastickersBlob(
   stickers: WastickerItem[],
-  title: string = "Papyrus Stickers",
-  author: string = "imaguncula"
+  title: string = "imagucula Stickers",
+  author: string = "imagucula"
 ): Promise<Blob> {
   const zip = new JSZip();
 
   // 1. Pack metadata files
-  zip.file("title.txt", title.trim() || "Papyrus Stickers");
-  zip.file("author.txt", author.trim() || "imaguncula");
+  zip.file("title.txt", title.trim() || "imagucula Stickers");
+  zip.file("author.txt", author.trim() || "imagucula");
 
   // 2. 96x96 tray thumbnail icon
   const firstDataUrl = stickers[0]?.dataUrl;
@@ -112,9 +112,9 @@ export async function downloadWastickersPack(
  */
 export async function shareWastickersPack(
   stickers: WastickerItem[],
-  packName: string = "papyrus_pack",
-  title: string = "Papyrus Stickers",
-  author: string = "imaguncula"
+  packName: string = "imagucula_pack",
+  title: string = "imagucula Stickers",
+  author: string = "imagucula"
 ): Promise<boolean> {
   if (typeof navigator === "undefined" || !navigator.canShare) {
     return false;

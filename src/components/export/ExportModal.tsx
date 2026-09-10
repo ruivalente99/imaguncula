@@ -131,14 +131,14 @@ export function ExportModal({ isOpen, onClose }: Props) {
   const handleDownloadWastickers = async () => {
     if (!webpResult) return;
     const items = [{ dataUrl: webpResult.dataUrl }];
-    await downloadWastickersPack(items, "sticker.wastickers", "Papyrus Sticker", "imaguncula");
+    await downloadWastickersPack(items, "sticker.wastickers", "imagucula Sticker", "imagucula");
     success(t("export.downloadWastickersSuccess"));
   };
 
   const handleShareWhatsApp = async () => {
     if (!webpResult) return;
     const file = new File([webpResult.blob], "sticker.webp", { type: "image/webp" });
-    const shared = await shareFileNative(file, "Papyrus Sticker", "Sticker do WhatsApp");
+    const shared = await shareFileNative(file, "imagucula Sticker", "Sticker do WhatsApp");
     if (shared) {
       success(t("export.sharedSuccess"));
     } else {

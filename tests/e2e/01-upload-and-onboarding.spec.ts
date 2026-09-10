@@ -6,7 +6,7 @@ test.describe("01. Upload and Onboarding Flow", () => {
 
     // Verify brand logo and title
     await expect(page.locator("header")).toBeVisible();
-    await expect(page.getByText("papyrus stickers")).toBeVisible();
+    await expect(page.getByText("imagucula stickers")).toBeVisible();
     if (!isMobile) {
       await expect(page.getByText("512×512 WebP")).toBeVisible();
     }

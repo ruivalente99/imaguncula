@@ -16,7 +16,7 @@ export function StickerTray() {
   const handleDownloadWastickers = async () => {
     if (savedStickers.length === 0) return;
     const items = savedStickers.map((s) => ({ dataUrl: s.thumbnailDataUrl }));
-    await downloadWastickersPack(items, "papyrus_pack.wastickers", "Papyrus Stickers", "imaguncula");
+    await downloadWastickersPack(items, "imagucula_pack.wastickers", "imagucula Stickers", "imagucula");
     success(t("tray.downloadWastickersSuccess"));
   };
 

@@ -101,7 +101,7 @@ async function runTests() {
     { dataUrl: "data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP8HAA==" },
     { dataUrl: "data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP8HAA==" },
   ];
-  const wastickerBlob = await buildWastickersBlob(testStickers, "My Test Pack", "imaguncula");
+  const wastickerBlob = await buildWastickersBlob(testStickers, "My Test Pack", "imagucula");
   assert(wastickerBlob.size > 0, ".wastickers blob must be non-empty");
 
   const loadedZip = await JSZip.loadAsync(await wastickerBlob.arrayBuffer());

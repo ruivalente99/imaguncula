@@ -44,7 +44,7 @@ export function Header({ onOpenExport }: HeaderProps) {
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold tracking-tight lowercase text-stone-900 dark:text-stone-100">
-                papyrus <span className="text-amber-600 dark:text-amber-400 font-semibold">stickers</span>
+                imagucula <span className="text-amber-600 dark:text-amber-400 font-semibold">stickers</span>
               </span>
               <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-mono font-medium tracking-wide bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">
                 512×512 WebP
