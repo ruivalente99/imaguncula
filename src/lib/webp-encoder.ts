@@ -129,8 +129,8 @@ export async function copyImageToClipboard(pngBlob: Blob): Promise<boolean> {
  */
 export async function shareFileNative(
   file: File,
-  title: string = "Papyrus Sticker",
-  text: string = "Criado com Papyrus Stickers"
+  title: string = "imagucula Sticker",
+  text: string = "Criado com imagucula"
 ): Promise<boolean> {
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
     try {

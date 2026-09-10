@@ -1,8 +1,8 @@
 /**
- * WhatsApp Direct Open & Clipboard Launch Utility.
- * Enables 1-click seamless workflow to copy sticker and open WhatsApp.
+ * WhatsApp Direct Open & Action Launch Utility.
+ * Enables 1-click seamless workflow to download compliant sticker and launch WhatsApp.
  */
-import { copyImageToClipboard } from "./webp-encoder";
+import { copyImageToClipboard, triggerFileDownload } from "./webp-encoder";
 
 export type WhatsAppTarget = "auto" | "web" | "app";
 
@@ -21,7 +21,7 @@ export function isMobileDevice(): boolean {
 /**
  * Opens WhatsApp on the device or in browser.
  * On Desktop: defaults to opening https://web.whatsapp.com in a new tab.
- * On Mobile: triggers whatsapp:// URL scheme, with graceful web fallback.
+ * On Mobile / App: triggers whatsapp:// URL scheme, with graceful web fallback.
  */
 export function openWhatsApp(target: WhatsAppTarget = "auto"): void {
   if (typeof window === "undefined") return;
@@ -34,26 +34,51 @@ export function openWhatsApp(target: WhatsAppTarget = "auto"): void {
   }
 
   // On Mobile or explicit App target:
-  // Trigger whatsapp://send protocol
   const targetUrl = "whatsapp://";
   window.location.href = targetUrl;
 
   // Fallback to web interface if app protocol is unhandled after timeout
-  setTimeout(() => {
-    window.open("https://web.whatsapp.com", "_blank", "noopener,noreferrer");
-  }, 1600);
+  if (isMobile) {
+    setTimeout(() => {
+      window.open("https://web.whatsapp.com", "_blank", "noopener,noreferrer");
+    }, 1600);
+  }
 }
 
 /**
- * Copies the transparent sticker image to clipboard and immediately launches WhatsApp.
- * When WhatsApp opens, user simply presses Ctrl+V / Cmd+V or long-press Paste.
+ * Triggers official sticker download and immediately launches WhatsApp so the user
+ * can click '+' -> 'Novo Autocolante' (New Sticker) and pick the downloaded sticker.
+ */
+export async function downloadAndOpenWhatsApp(
+  webpBlob: Blob,
+  pngBlob?: Blob,
+  target: WhatsAppTarget = "auto"
+): Promise<void> {
+  // 1. Download official WebP file so it is readily available in Downloads
+  triggerFileDownload(webpBlob, "sticker.webp");
+
+  // 2. Optionally copy PNG to clipboard
+  if (pngBlob) {
+    try {
+      await copyImageToClipboard(pngBlob);
+    } catch {
+      // Graceful fallback
+    }
+  }
+
+  // 3. Open WhatsApp Web or App
+  openWhatsApp(target);
+}
+
+/**
+ * Copies the transparent sticker image to clipboard and launches WhatsApp.
  */
 export async function copyAndLaunchWhatsApp(
   pngBlob: Blob,
   target: WhatsAppTarget = "auto"
 ): Promise<boolean> {
   const copied = await copyImageToClipboard(pngBlob);
-  // Launch WhatsApp regardless, so the user is in WhatsApp
   openWhatsApp(target);
   return copied;
 }
+

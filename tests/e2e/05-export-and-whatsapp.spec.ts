@@ -18,12 +18,12 @@ test.describe("05. Export Modal and WhatsApp Integration", () => {
     await expect(page.getByText("WhatsApp Ready")).toBeVisible();
 
     // Verify export buttons
+    await expect(page.getByRole("button", { name: /Abrir WhatsApp para Criar Sticker/i })).toBeVisible();
     await expect(page.getByRole("button", { name: /Adicionar ao WhatsApp \(\.wastickers\)/i })).toBeVisible();
     await expect(page.getByRole("button", { name: /Descarregar WebP Oficial/i })).toBeVisible();
-    await expect(page.getByRole("button", { name: /Copiar & Abrir no WhatsApp/i })).toBeVisible();
-    await expect(page.getByText("Partilhar com Aplicações")).toBeVisible();
     await expect(page.getByText("Copiar Imagem")).toBeVisible();
     await expect(page.getByRole("button", { name: "PNG HD" })).toBeVisible();
+    await expect(page.getByText("Como concluir no WhatsApp")).toBeVisible();
 
     // Verify WhatsApp guide accordion can be expanded
     await page.getByText("Como usar no WhatsApp?").click();
