@@ -14,7 +14,7 @@ import {
   ExportResult,
 } from "@/lib/webp-encoder";
 import { copyAndLaunchWhatsApp } from "@/lib/whatsapp-direct";
-import { downloadWastickersPack } from "@/lib/wastickers-export";
+import { downloadWastickersPack, shareWastickersPack } from "@/lib/wastickers-export";
 import { WhatsAppGuide } from "./WhatsAppGuide";
 import {
   X,
@@ -28,6 +28,7 @@ import {
   AlertTriangle,
   MessageCircle,
   PackageOpen,
+  Info,
 } from "lucide-react";
 
 interface Props {
@@ -131,6 +132,16 @@ export function ExportModal({ isOpen, onClose }: Props) {
   const handleDownloadWastickers = async () => {
     if (!webpResult) return;
     const items = [{ dataUrl: webpResult.dataUrl }];
+    
+    // On mobile devices supporting Web Share API, share .wastickers to prompt opening in Sticker Maker
+    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
+      const shared = await shareWastickersPack(items, "sticker", "imagucula Sticker", "imagucula");
+      if (shared) {
+        success(t("export.sharedSuccess"));
+        return;
+      }
+    }
+
     await downloadWastickersPack(items, "sticker.wastickers", "imagucula Sticker", "imagucula");
     success(t("export.downloadWastickersSuccess"));
   };
@@ -218,7 +229,7 @@ export function ExportModal({ isOpen, onClose }: Props) {
         <div className="flex flex-col sm:flex-row items-center gap-4 p-4 rounded-2xl bg-stone-50 dark:bg-[#0d1117] border border-stone-200/70 dark:border-[#30363d]">
           {/* 128x128 Preview with checkerboard */}
           <div
-            className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden shrink-0 relative flex items-center justify-center border border-stone-200 dark:border-stone-700 shadow-sm"
+            className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden shrink-0 relative flex items-center justify-center border border-stone-200 dark:border-stone-700 shadow-sm group"
             style={{
               backgroundImage:
                 "linear-gradient(45deg, #e4e4e7 25%, transparent 25%), linear-gradient(-45deg, #e4e4e7 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e4e4e7 75%), linear-gradient(-45deg, transparent 75%, #e4e4e7 75%)",
@@ -229,11 +240,18 @@ export function ExportModal({ isOpen, onClose }: Props) {
               <img
                 src={webpResult.dataUrl}
                 alt="Sticker Preview"
-                className="w-full h-full object-contain p-1"
+                draggable={true}
+                className="w-full h-full object-contain p-1 cursor-grab active:cursor-grabbing hover:scale-105 transition-transform"
+                title={t("export.dragHint")}
               />
             ) : (
               <div className="animate-pulse w-full h-full bg-stone-200 dark:bg-[#21262d]" />
             )}
+            <div className="absolute bottom-1 inset-x-1 flex items-center justify-center pointer-events-none">
+              <span className="px-1.5 py-0.5 rounded-md text-[8px] font-mono font-medium bg-stone-900/85 text-white shadow-xs">
+                {t("export.dragHint")}
+              </span>
+            </div>
           </div>
 
           {/* Specs & Status */}
@@ -264,40 +282,103 @@ export function ExportModal({ isOpen, onClose }: Props) {
           </div>
         </div>
 
+        {/* Informative notice on how WhatsApp sends true stickers */}
+        <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-amber-500/10 dark:bg-amber-950/20 border border-amber-500/25 text-xs text-stone-800 dark:text-stone-200">
+          <Info className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+          <div className="space-y-0.5 text-[11px] leading-relaxed">
+            <strong className="block font-bold text-stone-900 dark:text-stone-100">
+              {t("export.howItWorksTitle")}
+            </strong>
+            <p className="text-stone-600 dark:text-stone-300">
+              {t("export.howItWorksDesc")}
+            </p>
+          </div>
+        </div>
+
         {/* Primary Export Actions */}
         <div className="space-y-2.5">
-          {/* Action 1: Copy & Open in WhatsApp */}
+          {/* Action 1: Add to WhatsApp via Sticker Maker (.wastickers) */}
           <button
             type="button"
-            onClick={handleOpenWhatsApp}
-            disabled={isGenerating || !pngResult}
+            onClick={handleDownloadWastickers}
+            disabled={isGenerating || !webpResult}
             className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-sm shadow-emerald-600/25 active:scale-[0.99] transition-all cursor-pointer group"
           >
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-xl bg-white/20 group-hover:scale-110 transition-transform">
-                <MessageCircle className="w-4 h-4" />
+                <PackageOpen className="w-4 h-4" />
               </div>
               <div className="text-left">
-                <span className="block font-bold">{t("export.openWhatsApp")}</span>
+                <span className="block font-bold">{t("export.downloadWastickers")}</span>
                 <span className="text-[10px] text-white/80 font-normal">
-                  {t("export.openWhatsAppDesc")}
+                  {t("export.downloadWastickersDesc")}
                 </span>
               </div>
             </div>
             <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-white/20">
-              {t("export.openWhatsAppBadge")}
+              .wastickers
             </span>
           </button>
 
-          {/* Action 2: Send / Share on WhatsApp */}
+          {/* Action 2: Download Official WebP (Ideal for WhatsApp Web '+' -> Sticker or drag) */}
           <button
             type="button"
-            onClick={handleShareWhatsApp}
+            onClick={handleDownloadWebP}
             disabled={isGenerating || !webpResult}
             className="w-full flex items-center justify-between p-3 rounded-2xl border border-stone-200 dark:border-[#363d47] bg-stone-50/80 dark:bg-[#1c2128] hover:border-emerald-400 dark:hover:border-emerald-500 active:scale-[0.99] transition-all cursor-pointer group"
           >
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+                <Download className="w-4 h-4" />
+              </div>
+              <div className="text-left">
+                <span className="block font-bold text-xs sm:text-sm text-stone-900 dark:text-stone-100">
+                  {t("export.downloadWebp")}
+                </span>
+                <span className="text-[10px] text-stone-500">
+                  {t("export.downloadWebpDesc")}
+                </span>
+              </div>
+            </div>
+            <span className="text-[11px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
+              WebP 512
+            </span>
+          </button>
+
+          {/* Action 3: Copy & Open in WhatsApp */}
+          <button
+            type="button"
+            onClick={handleOpenWhatsApp}
+            disabled={isGenerating || !pngResult}
+            className="w-full flex items-center justify-between p-3 rounded-2xl border border-stone-200 dark:border-[#363d47] bg-stone-50/80 dark:bg-[#1c2128] hover:border-amber-400 dark:hover:border-amber-500 active:scale-[0.99] transition-all cursor-pointer group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform">
+                <MessageCircle className="w-4 h-4" />
+              </div>
+              <div className="text-left">
+                <span className="block font-bold text-xs sm:text-sm text-stone-900 dark:text-stone-100">
+                  {t("export.openWhatsApp")}
+                </span>
+                <span className="text-[10px] text-stone-500">
+                  {t("export.openWhatsAppDesc")}
+                </span>
+              </div>
+            </div>
+            <span className="text-[11px] font-mono font-bold text-amber-600 dark:text-amber-400">
+              {t("export.openWhatsAppBadge")}
+            </span>
+          </button>
+
+          {/* Action 4: Share Native */}
+          <button
+            type="button"
+            onClick={handleShareWhatsApp}
+            disabled={isGenerating || !webpResult}
+            className="w-full flex items-center justify-between p-3 rounded-2xl border border-stone-200 dark:border-[#363d47] bg-stone-50/80 dark:bg-[#1c2128] hover:border-stone-400 dark:hover:border-stone-500 active:scale-[0.99] transition-all cursor-pointer group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-stone-500/10 text-stone-600 dark:text-stone-400 group-hover:scale-110 transition-transform">
                 <Share2 className="w-4 h-4" />
               </div>
               <div className="text-left">
@@ -309,71 +390,21 @@ export function ExportModal({ isOpen, onClose }: Props) {
                 </span>
               </div>
             </div>
-            <span className="text-[11px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
+            <span className="text-[11px] font-mono text-stone-500">
               {t("export.sendBadge")}
             </span>
           </button>
 
-          {/* Action 3: Download .wastickers Pack for Sticker Maker / Sticker.ly */}
-          <button
-            type="button"
-            onClick={handleDownloadWastickers}
-            disabled={isGenerating || !webpResult}
-            className="w-full flex items-center justify-between p-3 rounded-2xl border border-stone-200 dark:border-[#363d47] bg-stone-50/80 dark:bg-[#1c2128] hover:border-amber-400 dark:hover:border-amber-500 active:scale-[0.99] transition-all cursor-pointer group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform">
-                <PackageOpen className="w-4 h-4" />
-              </div>
-              <div className="text-left">
-                <span className="block font-bold text-xs sm:text-sm text-stone-900 dark:text-stone-100">
-                  {t("export.downloadWastickers")}
-                </span>
-                <span className="text-[10px] text-stone-500">
-                  {t("export.downloadWastickersDesc")}
-                </span>
-              </div>
-            </div>
-            <span className="text-[11px] font-mono font-bold text-amber-600 dark:text-amber-400">
-              .wastickers
-            </span>
-          </button>
-
-          {/* Action 4: Copy Image (for WhatsApp Web) */}
-          <button
-            type="button"
-            onClick={handleCopyImage}
-            disabled={isGenerating || !pngResult}
-            className="w-full flex items-center justify-between p-3 rounded-2xl border border-stone-200 dark:border-[#363d47] bg-stone-50/80 dark:bg-[#1c2128] hover:border-amber-400 dark:hover:border-amber-500 active:scale-[0.99] transition-all cursor-pointer group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform">
-                {hasCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
-              </div>
-              <div className="text-left">
-                <span className="block font-bold text-xs sm:text-sm text-stone-900 dark:text-stone-100">
-                  {t("export.copyImage")}
-                </span>
-                <span className="text-[10px] text-stone-500">
-                  {t("export.copyImageDesc")}
-                </span>
-              </div>
-            </div>
-            <span className="text-[11px] font-mono text-stone-500">
-              {hasCopied ? t("export.copiedBadge") : "Ctrl+V"}
-            </span>
-          </button>
-
-          {/* Action 3: Download Sticker WebP */}
+          {/* Action 5: Copy Image & Download PNG HD */}
           <div className="grid grid-cols-2 gap-2.5 pt-1">
             <button
               type="button"
-              onClick={handleDownloadWebP}
-              disabled={isGenerating || !webpResult}
+              onClick={handleCopyImage}
+              disabled={isGenerating || !pngResult}
               className="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-stone-200 dark:border-[#363d47] bg-white dark:bg-[#161b22] hover:bg-stone-50 dark:hover:bg-[#1c2128] text-xs font-semibold text-stone-800 dark:text-stone-200 active:scale-95 transition-all cursor-pointer"
             >
-              <Download className="w-4 h-4 text-amber-600" />
-              <span>{t("export.formatWebp")}</span>
+              {hasCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4 text-amber-600" />}
+              <span>{hasCopied ? t("export.copiedBadge") : t("export.copyImage")}</span>
             </button>
 
             <button
