@@ -176,6 +176,8 @@ export function BorderControls() {
             </div>
             <button
               type="button"
+              data-testid="shadow-toggle"
+              aria-label="Toggle Sombra 3D"
               onClick={() => setBorder({ shadowEnabled: !border.shadowEnabled })}
               className={`w-11 h-6 rounded-full transition-colors relative p-0.5 cursor-pointer ${
                 border.shadowEnabled ? "bg-amber-600" : "bg-stone-200 dark:bg-[#30363d]"

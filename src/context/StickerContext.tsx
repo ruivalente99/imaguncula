@@ -113,6 +113,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
   const [wandContiguous, setWandContiguous] = useState(true);
 
   // History stack of ImageData for undo
+  const [undoCount, setUndoCount] = useState(0);
   const undoStackRef = useRef<ImageData[]>([]);
   const originalImageDataRef = useRef<ImageData | null>(null);
 
@@ -143,6 +144,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
     if (undoStackRef.current.length > 8) {
       undoStackRef.current.shift();
     }
+    setUndoCount(undoStackRef.current.length);
   }, []);
 
   const initCanvasFromImage = useCallback((img: HTMLImageElement) => {
@@ -195,6 +197,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
     setOriginalImage(null);
     setProcessedCanvas(null);
     undoStackRef.current = [];
+    setUndoCount(0);
     originalImageDataRef.current = null;
     setTextOverlays([]);
     setTransformState(defaultTransform);
@@ -289,6 +292,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
       originalImageDataRef.current.height
     );
     ctx.putImageData(clone, 0, 0);
+    setUndoCount(undoStackRef.current.length);
     setProcessedCanvas(processedCanvas);
   };
 
@@ -297,6 +301,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
     const last = undoStackRef.current.pop()!;
     const ctx = processedCanvas.getContext("2d", { willReadFrequently: true })!;
     ctx.putImageData(last, 0, 0);
+    setUndoCount(undoStackRef.current.length);
     setProcessedCanvas(processedCanvas);
   };
 
@@ -363,7 +368,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
         savedStickers,
         showCheckerboard,
         activeTab,
-        canUndo: undoStackRef.current.length > 0,
+        canUndo: undoCount > 0,
         brushSize,
         brushMode,
         wandTolerance,
