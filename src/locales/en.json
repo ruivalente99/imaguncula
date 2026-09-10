@@ -1,0 +1,146 @@
+{
+  "app": {
+    "name": "papyrus stickers",
+    "tagline": "editorial whatsapp sticker studio",
+    "badge": "pwa • offline-first",
+    "ready": "whatsapp ready (512x512 webp)",
+    "specs": "512x512 px • < 100 kb"
+  },
+  "nav": {
+    "editor": "Editor",
+    "background": "Background",
+    "border": "Border",
+    "text": "Text",
+    "tray": "Pack",
+    "export": "Export"
+  },
+  "upload": {
+    "title": "Upload Image",
+    "subtitle": "Drag a photo, click or paste with Ctrl+V",
+    "cta": "Choose Photo",
+    "camera": "Take Photo",
+    "dropPrompt": "Drop image here...",
+    "samplesPrompt": "Or try an instant sample:",
+    "sample1": "Cute Pet",
+    "sample2": "Meme Face",
+    "sample3": "Classic Cat",
+    "changePhoto": "Change Photo",
+    "removePhoto": "Remove Photo"
+  },
+  "bg": {
+    "title": "Background Removal",
+    "subtitle": "Quickly and easily remove the image background",
+    "wandTab": "Magic Wand",
+    "eraseTab": "Brush / Eraser",
+    "shapesTab": "Quick Shapes",
+    "autoCutout": "Automatic Removal",
+    "autoCutoutDesc": "Automatically detects and isolates borders and background corners",
+    "clickPrompt": "Tip: Click any color in preview to remove it!",
+    "tolerance": "Color Tolerance",
+    "feather": "Edge Feathering",
+    "contiguous": "Contiguous Colors Only",
+    "global": "All Similar Colors",
+    "brushSize": "Brush Size",
+    "brushMode": "Brush Mode",
+    "modeErase": "Erase",
+    "modeRestore": "Restore",
+    "resetMask": "Restore Original Image",
+    "undo": "Undo Action"
+  },
+  "border": {
+    "title": "Sticker Border",
+    "subtitle": "Add the die-cut white outline characteristic of real stickers",
+    "enableBorder": "Enable Sticker Border",
+    "withBorder": "With Border",
+    "withoutBorder": "Without Border",
+    "presets": {
+      "thin": "Thin",
+      "medium": "Medium",
+      "bold": "Bold",
+      "extra": "Extra"
+    },
+    "width": "Border Width",
+    "color": "Border Color",
+    "colorWhite": "Classic White",
+    "colorAmber": "Papyrus Amber",
+    "colorNeon": "Neon Green",
+    "colorBlack": "Black",
+    "shadowTitle": "3D Pop Shadow",
+    "enableShadow": "Floating Drop Shadow",
+    "shadowBlur": "Shadow Intensity"
+  },
+  "transform": {
+    "title": "Adjustments & Position",
+    "zoom": "Zoom / Scale",
+    "rotation": "Rotation",
+    "flipH": "Flip Horizontal",
+    "flipV": "Flip Vertical",
+    "center": "Center",
+    "reset": "Reset Transform",
+    "filters": "Image Filters",
+    "brightness": "Brightness",
+    "contrast": "Contrast",
+    "saturation": "Saturation"
+  },
+  "textOverlay": {
+    "title": "Captions & Emojis",
+    "addText": "Add Text",
+    "placeholder": "TYPE YOUR MEME...",
+    "font": "Font",
+    "size": "Size",
+    "textColor": "Text Color",
+    "strokeColor": "Text Outline",
+    "delete": "Remove Caption",
+    "quickEmojis": "Quick Sticker Emojis"
+  },
+  "shapes": {
+    "free": "Free",
+    "circle": "Circle",
+    "squircle": "Squircle",
+    "rounded": "Rounded",
+    "heart": "Heart",
+    "star": "Star"
+  },
+  "canvas": {
+    "checkerboard": "Transparent Grid",
+    "whatsappSafeZone": "Safety Padding (16px)",
+    "actualSize": "Actual Size 512x512",
+    "dragHint": "Drag to move • Pinch/Scroll to zoom"
+  },
+  "export": {
+    "title": "Export Sticker",
+    "subtitle": "Official WhatsApp format & multiple platforms",
+    "shareWhatsApp": "Share to WhatsApp",
+    "shareWhatsAppDesc": "Send directly to WhatsApp on mobile as a sticker",
+    "copyImage": "Copy Image",
+    "copyImageDesc": "Copy and paste (Ctrl+V) into WhatsApp Web or Telegram",
+    "downloadWebp": "Download WebP Sticker (512x512)",
+    "downloadWebpDesc": "Native sticker format with transparency & < 100 KB size",
+    "downloadPng": "Download Transparent PNG",
+    "downloadPngDesc": "High resolution for design, social media or other apps",
+    "saveToTray": "Save to My Pack",
+    "shareNative": "More Share Options",
+    "guideTitle": "How to use in WhatsApp?",
+    "guideWeb": "On WhatsApp Web: Click 'Copy Image' and press Ctrl+V in any chat.",
+    "guideMobile": "On Mobile: Click 'Share to WhatsApp' and pick your contact.",
+    "guideApps": "On Android/iOS: You can also import the downloaded .webp via Sticker.ly or Personal Stickers.",
+    "copiedSuccess": "Image copied to clipboard!",
+    "savedSuccess": "Sticker saved to your local pack!",
+    "sizeInfo": "Estimated file size:"
+  },
+  "tray": {
+    "title": "My Saved Stickers",
+    "subtitle": "Sticker pack stored locally in your browser",
+    "empty": "No stickers saved in this pack yet.",
+    "emptyPrompt": "Create a sticker and click 'Save to My Pack'.",
+    "downloadZip": "Download Full Pack (.ZIP)",
+    "clearAll": "Clear Pack",
+    "itemCount": "stickers in pack",
+    "confirmClear": "Are you sure you want to clear your saved stickers?"
+  },
+  "pwa": {
+    "install": "Install Application",
+    "installed": "PWA Installed",
+    "offlineNotice": "Offline Mode Active — 100% Private"
+  }
+}

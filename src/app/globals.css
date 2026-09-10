@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Impact&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  /* TypeUI Charm Palette (Light Mode Foundation - Papyrus) */
+  --page: #f7f7f5;
+  --card: #ffffff;
+  --card-soft: #fbfaf9;
+  --control-fill: #f5f4f1;
+  --band: #f1f2ea;
+  --heading: #1c1917;
+  --body: #57534e;
+  --body-subtle: #66615b;
+  --brand: #b45309;
+  --brand-light: #d97706;
+  --brand-soft: #fef3c7;
+  --border: #e7e6e5;
+  --border-subtle: #ebebe7;
+}
+
+.dark {
+  /* TypeUI Charm Palette (High-Contrast Obsidian & Warm Slate - Papyrus) */
+  --page: #0d1117;
+  --surface-1: #161b22;
+  --card: #161b22;
+  --card-soft: #1c2128;
+  --control-fill: #0d1117;
+  --band: #161b22;
+  --heading: #f0f3f6;
+  --body: #c9d1d9;
+  --body-subtle: #8b949e;
+  --brand: #f59e0b;
+  --brand-light: #fbbf24;
+  --brand-soft: rgba(245, 158, 11, 0.15);
+  --border: #363d47;
+  --border-subtle: #2d333b;
+}
+
+@layer base {
+  html,
+  body {
+    max-width: 100vw;
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+    background-color: var(--page);
+    color: var(--heading);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  /* Prevent browser ghost dragging of elements on mobile/desktop */
+  *, *::before, *::after {
+    -webkit-user-drag: none;
+  }
+
+  img, a, button, svg {
+    -webkit-user-drag: none;
+    user-drag: none;
+  }
+
+  .dark body,
+  body.dark {
+    background-color: var(--page);
+    color: var(--heading);
+  }
+
+  input[type="text"],
+  select,
+  textarea {
+    border-radius: 0.75rem; /* rounded-xl (12px) */
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  }
+
+  input[type="text"]:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #d97706;
+    box-shadow: 0 0 0 1px #d97706;
+  }
+
+  .dark input[type="text"]:focus,
+  .dark select:focus,
+  .dark textarea:focus {
+    outline: none;
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 1.5px #f59e0b;
+  }
+}
+
+/* Hide scrollbars for clean horizontal pill bars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* iOS Safe Area Utilities with base comfort padding */
+.pt-safe {
+  padding-top: calc(0.5rem + env(safe-area-inset-top, 0px));
+}
+.pb-safe {
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+}
+.pl-safe {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+.pr-safe {
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* Charm Dynamic Ambient Background */
+.charm-bg-dynamic {
+  background-color: var(--page);
+  background-image: 
+    radial-gradient(at 15% 15%, rgba(245, 158, 11, 0.04) 0px, transparent 60%),
+    radial-gradient(at 85% 85%, rgba(228, 84, 75, 0.03) 0px, transparent 60%);
+  background-attachment: fixed;
+}
+
+.dark .charm-bg-dynamic {
+  background-color: var(--page);
+  background-image: 
+    radial-gradient(at 15% 15%, rgba(245, 158, 11, 0.06) 0px, transparent 55%),
+    radial-gradient(at 85% 85%, rgba(56, 189, 248, 0.03) 0px, transparent 55%);
+  background-attachment: fixed;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d6d3d1;
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #363d47;
+}

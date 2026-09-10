@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <!-- Solid background to test background removal -->
+  <rect width="400" height="400" fill="#e0f2fe"/>
+  <!-- Cute Dog Illustration -->
+  <g transform="translate(100, 80)">
+    <!-- Ears -->
+    <ellipse cx="40" cy="80" rx="30" ry="50" fill="#b45309" transform="rotate(-20 40 80)"/>
+    <ellipse cx="160" cy="80" rx="30" ry="50" fill="#b45309" transform="rotate(20 160 80)"/>
+    <!-- Head -->
+    <ellipse cx="100" cy="110" rx="75" ry="70" fill="#d97706"/>
+    <!-- Snout -->
+    <ellipse cx="100" cy="135" rx="38" ry="32" fill="#fef3c7"/>
+    <!-- Nose -->
+    <ellipse cx="100" cy="120" rx="14" ry="10" fill="#1e293b"/>
+    <!-- Tongue -->
+    <path d="M92 145 C92 165, 108 165, 108 145 Z" fill="#f43f5e"/>
+    <!-- Eyes -->
+    <circle cx="75" cy="95" r="10" fill="#1e293b"/>
+    <circle cx="78" cy="92" r="3" fill="#ffffff"/>
+    <circle cx="125" cy="95" r="10" fill="#1e293b"/>
+    <circle cx="128" cy="92" r="3" fill="#ffffff"/>
+    <!-- Body -->
+    <path d="M45 160 C30 220, 170 220, 155 160 Z" fill="#b45309"/>
+    <!-- Paws -->
+    <ellipse cx="70" cy="220" rx="20" ry="12" fill="#fef3c7"/>
+    <ellipse cx="130" cy="220" rx="20" ry="12" fill="#fef3c7"/>
+  </g>
+</svg>

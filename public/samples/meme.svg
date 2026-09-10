@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <!-- Solid bright yellow background for testing wand removal -->
+  <rect width="400" height="400" fill="#fef08a"/>
+  <!-- Cool Guy / Meme Emoji Avatar -->
+  <g transform="translate(200, 200)">
+    <!-- Face Circle -->
+    <circle cx="0" cy="0" r="120" fill="#f59e0b" stroke="#d97706" stroke-width="6"/>
+    <!-- Sunglasses -->
+    <path d="M-80 -25 L-15 -25 L-25 15 L-70 15 Z" fill="#0f172a"/>
+    <path d="M15 -25 L80 -25 L70 15 L25 15 Z" fill="#0f172a"/>
+    <!-- Bridge -->
+    <rect x="-15" y="-20" width="30" height="6" fill="#0f172a"/>
+    <!-- Glass Glare -->
+    <polygon points="-70,-20 -50,-20 -60,10 -80,10" fill="#ffffff" opacity="0.3"/>
+    <polygon points="25,-20 45,-20 35,10 15,10" fill="#ffffff" opacity="0.3"/>
+    <!-- Smirk Smile -->
+    <path d="M-40 45 Q10 85 50 35" fill="none" stroke="#78350f" stroke-width="8" stroke-linecap="round"/>
+    <!-- Rosy Cheeks -->
+    <circle cx="-70" cy="40" r="14" fill="#f43f5e" opacity="0.4"/>
+    <circle cx="70" cy="40" r="14" fill="#f43f5e" opacity="0.4"/>
+  </g>
+</svg>

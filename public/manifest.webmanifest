@@ -1,0 +1,33 @@
+{
+  "name": "papyrus stickers",
+  "short_name": "stickers",
+  "description": "Criador editorial e privado de stickers para WhatsApp (512x512 WebP)",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#f7f7f5",
+  "theme_color": "#f7f7f5",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["utilities", "photo", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Novo Sticker",
+      "url": "/",
+      "icons": [{ "src": "/icon.svg", "sizes": "any" }]
+    }
+  ]
+}

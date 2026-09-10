@@ -1,0 +1,146 @@
+{
+  "app": {
+    "name": "papyrus stickers",
+    "tagline": "criador editorial de stickers para whatsapp",
+    "badge": "pwa • offline-first",
+    "ready": "pronto para whatsapp (512x512 webp)",
+    "specs": "512x512 px • < 100 kb"
+  },
+  "nav": {
+    "editor": "Editor",
+    "background": "Fundo",
+    "border": "Borda",
+    "text": "Texto",
+    "tray": "Pacote",
+    "export": "Exportar"
+  },
+  "upload": {
+    "title": "Carregar Imagem",
+    "subtitle": "Arraste uma foto, clique ou cole com Ctrl+V",
+    "cta": "Escolher Foto",
+    "camera": "Tirar Foto",
+    "dropPrompt": "Solte a imagem aqui...",
+    "samplesPrompt": "Ou experimente um exemplo instantâneo:",
+    "sample1": "Pet Fofo",
+    "sample2": "Meme Expressivo",
+    "sample3": "Gato Clássico",
+    "changePhoto": "Trocar Foto",
+    "removePhoto": "Remover Foto"
+  },
+  "bg": {
+    "title": "Remoção de Fundo",
+    "subtitle": "Remova o fundo da imagem de forma simples e rápida",
+    "wandTab": "Varinha Mágica",
+    "eraseTab": "Pincel / Borracha",
+    "shapesTab": "Formas Rápidas",
+    "autoCutout": "Remoção Automática",
+    "autoCutoutDesc": "Detecta e isola automaticamente as bordas e cantos do fundo",
+    "clickPrompt": "Dica: Clique em qualquer cor no preview para removê-la!",
+    "tolerance": "Tolerância de Cor",
+    "feather": "Suavização de Borda",
+    "contiguous": "Apenas Cores Contíguas",
+    "global": "Todas as Cores Similares",
+    "brushSize": "Tamanho do Pincel",
+    "brushMode": "Modo do Pincel",
+    "modeErase": "Apagar",
+    "modeRestore": "Restaurar",
+    "resetMask": "Restaurar Imagem Original",
+    "undo": "Desfazer Ação"
+  },
+  "border": {
+    "title": "Borda de Adesivo",
+    "subtitle": "Adicione o contorno recortado característico de stickers",
+    "enableBorder": "Ativar Borda de Sticker",
+    "withBorder": "Com Borda",
+    "withoutBorder": "Sem Borda",
+    "presets": {
+      "thin": "Fina",
+      "medium": "Média",
+      "bold": "Grossa",
+      "extra": "Extra"
+    },
+    "width": "Espessura da Borda",
+    "color": "Cor da Borda",
+    "colorWhite": "Branco Clássico",
+    "colorAmber": "Âmbar Papyrus",
+    "colorNeon": "Verde Neon",
+    "colorBlack": "Preto",
+    "shadowTitle": "Sombra de Destaque 3D",
+    "enableShadow": "Efeito de Sombra Flutuante",
+    "shadowBlur": "Intensidade da Sombra"
+  },
+  "transform": {
+    "title": "Ajustes & Posição",
+    "zoom": "Zoom / Escala",
+    "rotation": "Rotação",
+    "flipH": "Espelhar Horizontal",
+    "flipV": "Espelhar Vertical",
+    "center": "Centralizar",
+    "reset": "Redefinir Ajustes",
+    "filters": "Filtros de Imagem",
+    "brightness": "Brilho",
+    "contrast": "Contraste",
+    "saturation": "Saturação"
+  },
+  "textOverlay": {
+    "title": "Legendas & Emojis",
+    "addText": "Adicionar Texto",
+    "placeholder": "DIGITE SEU MEME...",
+    "font": "Fonte",
+    "size": "Tamanho",
+    "textColor": "Cor do Texto",
+    "strokeColor": "Contorno do Texto",
+    "delete": "Remover Legenda",
+    "quickEmojis": "Stickers / Emojis Rápidos"
+  },
+  "shapes": {
+    "free": "Livre",
+    "circle": "Círculo",
+    "squircle": "Superelipse",
+    "rounded": "Retângulo",
+    "heart": "Coração",
+    "star": "Estrela"
+  },
+  "canvas": {
+    "checkerboard": "Grade Transparente",
+    "whatsappSafeZone": "Margem de Segurança (16px)",
+    "actualSize": "Tamanho Real 512x512",
+    "dragHint": "Arraste para mover • Pinça/Scroll para zoom"
+  },
+  "export": {
+    "title": "Exportar Sticker",
+    "subtitle": "Formato oficial do WhatsApp e outras plataformas",
+    "shareWhatsApp": "Compartilhar no WhatsApp",
+    "shareWhatsAppDesc": "Envia diretamente para o WhatsApp no celular como figurinha",
+    "copyImage": "Copiar Imagem",
+    "copyImageDesc": "Copie e cole (Ctrl+V) no WhatsApp Web ou Telegram",
+    "downloadWebp": "Baixar Sticker WebP (512x512)",
+    "downloadWebpDesc": "Formato nativo para stickers com transparência e peso < 100 KB",
+    "downloadPng": "Baixar PNG Transparente",
+    "downloadPngDesc": "Alta resolução para design, redes sociais ou outros apps",
+    "saveToTray": "Salvar no Meu Pacote",
+    "shareNative": "Mais Opções de Envio",
+    "guideTitle": "Como usar no WhatsApp?",
+    "guideWeb": "No WhatsApp Web: Clique em 'Copiar Imagem' e aperte Ctrl+V no chat.",
+    "guideMobile": "No Celular: Clique em 'Compartilhar no WhatsApp' e selecione o contato.",
+    "guideApps": "No Android/iOS: Pode também importar o arquivo .webp baixado via Sticker.ly ou Personal Stickers.",
+    "copiedSuccess": "Imagem copiada para a área de transferência!",
+    "savedSuccess": "Sticker salvo no seu pacote local!",
+    "sizeInfo": "Tamanho calculado:"
+  },
+  "tray": {
+    "title": "Meus Stickers Salvos",
+    "subtitle": "Pacote de figurinhas armazenado localmente no seu navegador",
+    "empty": "Nenhum sticker salvo no pacote ainda.",
+    "emptyPrompt": "Crie uma figurinha e clique em 'Salvar no Meu Pacote'.",
+    "downloadZip": "Baixar Pacote Completo (.ZIP)",
+    "clearAll": "Limpar Pacote",
+    "itemCount": "figurinhas no pacote",
+    "confirmClear": "Tem certeza que deseja apagar os stickers salvos?"
+  },
+  "pwa": {
+    "install": "Instalar Aplicativo",
+    "installed": "PWA Instalado",
+    "offlineNotice": "Modo Offline Ativo — Total privacidade"
+  }
+}

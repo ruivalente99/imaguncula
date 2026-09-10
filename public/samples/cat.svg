@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <!-- Solid pink background for testing wand removal -->
+  <rect width="400" height="400" fill="#fce7f3"/>
+  <!-- Cute Cat Avatar -->
+  <g transform="translate(200, 210)">
+    <!-- Cat Ears -->
+    <polygon points="-80,-40 -110,-120 -30,-80" fill="#f97316"/>
+    <polygon points="-75,-50 -95,-105 -45,-75" fill="#fbcfe8"/>
+    <polygon points="80,-40 110,-120 30,-80" fill="#f97316"/>
+    <polygon points="75,-50 95,-105 45,-75" fill="#fbcfe8"/>
+    <!-- Head -->
+    <circle cx="0" cy="0" r="105" fill="#fb923c"/>
+    <!-- Cheeks -->
+    <ellipse cx="-45" cy="20" rx="35" ry="25" fill="#fed7aa"/>
+    <ellipse cx="45" cy="20" rx="35" ry="25" fill="#fed7aa"/>
+    <!-- Big Anime Eyes -->
+    <ellipse cx="-40" cy="-20" rx="20" ry="26" fill="#047857"/>
+    <circle cx="-35" cy="-26" r="8" fill="#ffffff"/>
+    <circle cx="-45" cy="-14" r="4" fill="#ffffff"/>
+    <ellipse cx="40" cy="-20" rx="20" ry="26" fill="#047857"/>
+    <circle cx="45" cy="-26" r="8" fill="#ffffff"/>
+    <circle cx="35" cy="-14" r="4" fill="#ffffff"/>
+    <!-- Nose & Mouth -->
+    <polygon points="-8,10 8,10 0,18" fill="#f43f5e"/>
+    <path d="M-15 24 Q0 34 0 20 Q0 34 15 24" fill="none" stroke="#7c2d12" stroke-width="4" stroke-linecap="round"/>
+    <!-- Whiskers -->
+    <line x1="-60" y1="15" x2="-110" y2="8" stroke="#7c2d12" stroke-width="3" stroke-linecap="round"/>
+    <line x1="-60" y1="25" x2="-110" y2="28" stroke="#7c2d12" stroke-width="3" stroke-linecap="round"/>
+    <line x1="60" y1="15" x2="110" y2="8" stroke="#7c2d12" stroke-width="3" stroke-linecap="round"/>
+    <line x1="60" y1="25" x2="110" y2="28" stroke="#7c2d12" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>
