@@ -1,72 +1,17 @@
 import { StickerBorderConfig, StickerTransform, TextOverlayItem, CutoutShape } from "@/types/sticker";
+import {
+  createOffscreenCanvas,
+  renderStickerOutline,
+  compressCanvasImage,
+  downloadCanvas,
+} from "@ruivalente99/bibliotheca/export";
 
-/**
- * Creates an offscreen canvas of specified dimensions.
- */
-export function createOffscreenCanvas(width: number, height: number): {
-  canvas: HTMLCanvasElement;
-  ctx: CanvasRenderingContext2D;
-} {
-  const canvas = document.createElement("canvas");
-  canvas.width = width;
-  canvas.height = height;
-  const ctx = canvas.getContext("2d", { willReadFrequently: true })!;
-  return { canvas, ctx };
-}
-
-/**
- * Generates a smooth, die-cut sticker silhouette outline using radial dilation.
- * This runs completely client-side in microseconds.
- */
-export function renderStickerOutline(
-  sourceCanvas: HTMLCanvasElement,
-  borderWidth: number,
-  borderColor: string
-): HTMLCanvasElement {
-  if (borderWidth <= 0) return sourceCanvas;
-
-  const w = sourceCanvas.width;
-  const h = sourceCanvas.height;
-
-  // 1. Create silhouette mask (tint all visible pixels with borderColor)
-  const { canvas: maskCanvas, ctx: maskCtx } = createOffscreenCanvas(w, h);
-  maskCtx.drawImage(sourceCanvas, 0, 0);
-  maskCtx.globalCompositeOperation = "source-in";
-  maskCtx.fillStyle = borderColor;
-  maskCtx.fillRect(0, 0, w, h);
-
-  // 2. Dilate the silhouette outward using radial offsets
-  const { canvas: dilatedCanvas, ctx: dilatedCtx } = createOffscreenCanvas(w, h);
-  dilatedCtx.imageSmoothingEnabled = true;
-
-  // Number of radial steps proportional to radius to ensure no gaps
-  const steps = Math.max(24, Math.ceil(borderWidth * 2.5));
-  const angleStep = (Math.PI * 2) / steps;
-
-  // Draw concentric rings from 1 to borderWidth for solid fill
-  const radialInterval = Math.max(1, Math.floor(borderWidth / 6));
-  for (let r = radialInterval; r <= borderWidth; r += radialInterval) {
-    for (let i = 0; i < steps; i++) {
-      const angle = i * angleStep;
-      const dx = Math.round(Math.cos(angle) * r);
-      const dy = Math.round(Math.sin(angle) * r);
-      dilatedCtx.drawImage(maskCanvas, dx, dy);
-    }
-  }
-
-  // Draw the outermost ring with high precision
-  for (let i = 0; i < steps; i++) {
-    const angle = i * angleStep;
-    const dx = Math.round(Math.cos(angle) * borderWidth);
-    const dy = Math.round(Math.sin(angle) * borderWidth);
-    dilatedCtx.drawImage(maskCanvas, dx, dy);
-  }
-
-  // Center mask fill
-  dilatedCtx.drawImage(maskCanvas, 0, 0);
-
-  return dilatedCanvas;
-}
+export {
+  createOffscreenCanvas,
+  renderStickerOutline,
+  compressCanvasImage,
+  downloadCanvas,
+};
 
 /**
  * Applies geometric shape cutouts (circle, squircle, heart, rounded rect, star)
