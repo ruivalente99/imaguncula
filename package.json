@@ -12,6 +12,7 @@
     "test": "npm run test:engine && npm run test:e2e"
   },
   "dependencies": {
+    "@ruivalente99/bibliotheca": "^0.4.0",
     "clsx": "^2.1.1",
     "jszip": "^3.10.1",
     "lucide-react": "^0.475.0",
